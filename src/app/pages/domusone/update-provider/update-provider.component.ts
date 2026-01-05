@@ -6,13 +6,6 @@ import { DarkSidebarComponent } from '../../../components/sidebar/dark-sidebar/d
 import { TopHeaderComponent } from '../../../components/top-header/top-header.component';
 import { FooterComponent } from '../../../components/footer/footer.component';
 
-interface ProviderUpdate {
-  id: number | null;
-  name: string;
-  service: string;
-  rating: number;
-}
-
 @Component({
   selector: 'app-update-service',
   standalone: true,
@@ -28,10 +21,13 @@ interface ProviderUpdate {
 })
 export class UpdateProviderComponent {
   activeSidebar: boolean = true;
-  provider: { id: number; name: string; service: string; rating: number } = {
-    id: 0,
+  provider: { id: string; name: string; service_id: string; description: string; email: string; phone: string; rating: number } = {
+    id: '',
     name: '',
-    service: '',
+    service_id: '',
+    description: '',
+    email: '',
+    phone: '',
     rating: 0,
   };
   error = '';
@@ -42,7 +38,7 @@ export class UpdateProviderComponent {
   updateProvider() {
     this.error = '';
     this.success = '';
-    if (typeof this.provider.id === 'number' && this.provider.id > 0) {
+    if (this.provider.id && this.provider.id.trim() !== '') {
       this.providersService.updateProvider(this.provider).subscribe({
         next: () => {
           this.success = 'Proveedor actualizado exitosamente.';

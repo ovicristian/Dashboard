@@ -21,7 +21,7 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 })
 export class DropProviderComponent {
   activeSidebar: boolean = true;
-  providerId: number | null = null;
+  providerId: string = '';
   error = '';
   success = '';
 
@@ -34,7 +34,7 @@ export class DropProviderComponent {
       this.providersService.deleteProvider(this.providerId).subscribe({
         next: () => {
           this.success = 'Proveedor eliminado exitosamente.';
-          this.providerId = null;
+          this.providerId = '';
         },
         error: () => {
           this.error = 'Error al eliminar el proveedor.';

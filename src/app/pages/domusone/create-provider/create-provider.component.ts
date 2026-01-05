@@ -22,7 +22,7 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 })
 export class CreateProviderComponent {
   activeSidebar: boolean = true;
-  provider = { name: '', service: '', rating: 0 };
+  provider = { name: '', service_id: '', description: '', email: '', phone: '' };
   error = '';
   success = '';
 
@@ -37,7 +37,7 @@ export class CreateProviderComponent {
     this.providersService.createProvider(this.provider).subscribe({
       next: () => {
         this.success = 'Proveedor creado exitosamente.';
-        this.provider = { name: '', service: '', rating: 0 };
+        this.provider = { name: '', service_id: '', description: '', email: '', phone: '' };
       },
       error: (err) => {
         console.error('Error details:', err);

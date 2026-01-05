@@ -21,7 +21,7 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 })
 export class DropServiceComponent {
   activeSidebar: boolean = true;
-  serviceId: number | null = null;
+  serviceId: string = '';
   error = '';
   success = '';
 
@@ -34,7 +34,7 @@ export class DropServiceComponent {
       this.servicesService.deleteService(this.serviceId).subscribe({
         next: () => {
           this.success = 'Servicio eliminado exitosamente.';
-          this.serviceId = null;
+          this.serviceId = '';
         },
         error: () => {
           this.error = 'Error al eliminar el servicio.';
