@@ -1,56 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { Provider, ProvidersApiResponse } from '../models/provider.model';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProvidersService {
-  private apiUrl = 'https://api.domusone.com.co/api/providers';
-
-  constructor(private http: HttpClient) {}
+  constructor(private supabaseService: SupabaseService) {}
 
   getProviders(
     page: number = 1,
     limit: number = 10
   ): Observable<{ providers: Provider[]; total: number }> {
-    return this.http.get<ProvidersApiResponse>(this.apiUrl).pipe(
+    return from(this.supabaseService.getProviders()).pipe(
       map((response) => {
-        // The new API returns { message, data, note }
-        const providers = response.data || [];
+        const providers = (response.data || []) as Provider[];
         return { providers: providers, total: providers.length };
       })
     );
   }
 
-  createProvider(provider: { name: string; service: string; rating: number }) {
-    const token = localStorage.getItem('token');
-    return this.http.post(`${this.apiUrl}`, provider, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+  createProvider(provider: { name: string; service_id: string; description?: string; email?: string; phone?: string }): Observable<any> {
+    return from(this.supabaseService.createProvider(provider));
   }
 
-  deleteProvider(id: number) {
-    const token = localStorage.getItem('token');
-    return this.http.delete(`${this.apiUrl}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+  deleteProvider(id: string): Observable<any> {
+    return from(this.supabaseService.deleteProvider(id));
   }
 
   updateProvider(provider: {
-    id: number;
-    name: string;
-    service: string;
-    rating: number;
-  }) {
-    const token = localStorage.getItem('token');
-    return this.http.put(
-      `${this.apiUrl}/${provider.id}`,
-      {
-        name: provider.name,
-        service: provider.service,
-        rating: provider.rating,
-      },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    id: string;
+    name?: string;
+    service_id?: string;
+    description?: string;
+    email?: string;
+    phone?: string;
+    rating?: number;
+  }): Observable<any> {
+    const { id, ...updates } = provider;
+    return from(this.supabaseService.updateProvider(id, updates));
   }
 }
