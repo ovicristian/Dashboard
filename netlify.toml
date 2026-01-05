@@ -1,7 +1,7 @@
 # Build settings
 [build]
   command = "npm run build"
-  publish = "dist/techwind-admin/browser"
+  publish = "dist/techwind_admin/browser"
   
 [build.environment]
   NODE_VERSION = "18.17.0"
