@@ -9,6 +9,15 @@ import { SwitcherComponent } from './components/switcher/switcher.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet,SwitcherComponent],
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements AfterViewInit, OnInit {
+  title = 'techwind-admin';
+  
+  ngOnInit(): void {
+    console.log('Dashboard App Initialized');
+  }
+  templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 

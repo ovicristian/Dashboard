@@ -15,7 +15,7 @@ import { DropProviderComponent } from './pages/domusone/drop-provider/drop-provi
 import { UpdateProviderComponent } from './pages/domusone/update-provider/update-provider.component';
 
 export const routes: Routes = [
-  { path: '', component: ServicesComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/services', pathMatch: 'full' },
   { path: 'services', component: ServicesComponent, canActivate: [AuthGuard] },
   { path: 'auth-login', component: AuthLoginComponent },
   { path: 'auth-signup', component: AuthSignupComponent },
@@ -53,4 +53,5 @@ export const routes: Routes = [
     component: UpdateProviderComponent,
     canActivate: [AuthGuard],
   },
+  { path: '**', redirectTo: '/auth-login' }
 ];
