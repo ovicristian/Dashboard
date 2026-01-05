@@ -1,0 +1,26 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { DarkSidebarComponent } from '../../../components/sidebar/dark-sidebar/dark-sidebar.component';
+import { TopHeaderComponent } from '../../../components/top-header/top-header.component';
+import { FooterComponent } from '../../../components/footer/footer.component';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-pricing',
+  standalone: true,
+  imports: [CommonModule, DarkSidebarComponent, TopHeaderComponent, FooterComponent,RouterLink],
+  templateUrl: './pricing.component.html',
+  styleUrls: ['./pricing.component.scss']
+})
+export class PricingComponent {
+  activeSidebar:boolean = true
+  toggleClass(){
+    this.activeSidebar=!this.activeSidebar;
+  }
+
+  activeTab:number = 1
+
+  onTabClick(index:number){
+    this.activeTab = index
+  }
+}

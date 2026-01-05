@@ -1,0 +1,48 @@
+# Build settings
+[build]
+  command = "npm run build"
+  publish = "dist/techwind-admin/browser"
+  
+[build.environment]
+  NODE_VERSION = "18.17.0"
+  NG_CLI_ANALYTICS = "false"
+
+# Production context
+[context.production.environment]
+  NODE_ENV = "production"
+
+# Deploy Preview context  
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
+
+# Redirects - SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache static assets
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

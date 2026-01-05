@@ -1,0 +1,139 @@
+<div class="page-wrapper" [ngClass]="{ toggled: activeSidebar }">
+  <!-- sidebar-wrapper -->
+  <app-dark-sidebar />
+  <!-- sidebar-wrapper  -->
+
+  <!-- Start Page Content -->
+  <main class="page-content bg-gray-50 dark:bg-slate-800">
+    <!-- Top Header -->
+    <app-top-header (toggleClass)="toggleClass()" />
+    <!-- Top Header -->
+
+    <div class="container-fluid relative px-3">
+      <div class="layout-specing">
+        <div class="flex justify-between items-center mb-6">
+          <h1 style="font-weight: bold">
+            Servicios disponibles
+          </h1>
+          <div class="flex space-x-3">
+            <a routerLink="/create-service" 
+               class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+              + Crear Servicio
+            </a>
+            <a routerLink="/providers" 
+               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+              Ver Proveedores
+            </a>
+          </div>
+        </div>
+        <hr />
+        
+        <!-- Loading State -->
+        <div *ngIf="loading" class="text-center py-4">
+          <div class="inline-flex items-center space-x-2">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
+            <span class="text-gray-600">Cargando servicios...</span>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error && !loading" class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 mb-4">
+          {{ error }}
+        </div>
+
+        <!-- Services Count -->
+        <div *ngIf="!loading && !error" class="mb-4">
+          <p class="text-gray-600">Total de servicios: {{ total }}</p>
+        </div>
+
+        <div class="card rounded-md shadow border-0 mt-4" *ngIf="!loading">
+          <div class="card-body p-0">
+            <div
+              class="table-responsive rounded-md"
+              [ngClass]="{
+                'bg-white': !isDarkMode,
+                'bg-slate-900': isDarkMode
+              }"
+              style="width: 100%"
+            >
+              <table class="table mb-0 table-hover" style="width: 100%">
+                <thead
+                  [ngClass]="{
+                    'bg-gray-100': !isDarkMode,
+                    'bg-slate-800 text-white': isDarkMode
+                  }"
+                >
+                  <tr>
+                    <th class="text-start py-3 px-4" style="width: 60px">ID</th>
+                    <th class="text-start py-3 px-4" style="width: 200px">
+                      Nombre
+                    </th>
+                    <th class="text-start py-3 px-4" style="width: 300px">
+                      Descripción
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let service of services; let i = index"
+                    [ngClass]="{
+                      'bg-gray-200': !isDarkMode && i % 2 === 0,
+                      'bg-blue-100': !isDarkMode && i % 2 !== 0,
+                      'bg-gray-800 text-white': isDarkMode && i % 2 === 0,
+                      'bg-blue-900 text-white': isDarkMode && i % 2 !== 0
+                    }"
+                    style="border-bottom: 1px solid #222"
+                  >
+                    <td class="py-3 px-4">{{ service.id }}</td>
+                    <td class="py-3 px-4">{{ service.name }}</td>
+                    <td class="py-3 px-4">{{ service.description }}</td>
+                  </tr>
+                  <!-- No services message -->
+                  <tr *ngIf="services.length === 0 && !loading && !error">
+                    <td colspan="3" class="py-8 text-center text-gray-500">
+                      No hay servicios disponibles. 
+                      <a routerLink="/create-service" class="text-indigo-600 hover:underline">Crear el primer servicio</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="pagination mt-3">
+          <button
+            class="btn btn-outline-primary btn-sm"
+            (click)="prevPage()"
+            [disabled]="page === 1"
+          >
+            Anterior
+          </button>
+          <span class="mx-2">Página {{ page }} de {{ totalPages }}</span>
+          <button
+            class="btn btn-outline-primary btn-sm"
+            (click)="nextPage()"
+            [disabled]="page === totalPages"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Start -->
+    <app-footer />
+    <!-- End -->
+  </main>
+  <!--End page-content" -->
+</div>
+<script>
+  this.servicesService.getServices(this.page, this.limit).subscribe({
+    next: (data) => {
+      this.services = data.services;
+      this.total = data.total;
+    },
+    error: (err) => {
+      console.error("Error fetching services:", err);
+    },
+  });
+</script>

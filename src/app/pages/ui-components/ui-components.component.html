@@ -1,0 +1,1199 @@
+<div class="page-wrapper" [ngClass]="{ 'toggled': activeSidebar }">
+    <!-- sidebar-wrapper -->
+    <app-dark-sidebar/>
+    <!-- sidebar-wrapper  -->
+
+    <!-- Start Page Content -->
+    <main class="page-content bg-gray-50 dark:bg-slate-800">
+        <!-- Top Header -->
+        <app-top-header (toggleClass)="toggleClass()"/>
+        <!-- Top Header -->
+       
+        <div class="container-fluid relative px-3">
+            <div class="layout-specing">
+                <!-- Start Content -->
+                <div class="md:flex justify-between items-center">
+                    <h5 class="text-lg font-semibold">UI Components</h5>
+
+                    <ul class="tracking-[0.5px] inline-block sm:mt-0 mt-3">
+                        <li class="inline-block capitalize text-[14px] font-bold duration-500 dark:text-white/70 hover:text-indigo-600 dark:hover:text-white"><a routerLink="index.html">Techwind</a></li>
+                        <li class="inline-block text-base text-slate-950 dark:text-white/70 mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
+                        <li class="inline-block capitalize text-[14px] font-bold text-indigo-600 dark:text-white" aria-current="page">Components</li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-1 mt-6 gap-6 relative">
+
+                    <div class="md:flex lg:w-3/4 w-full justify-center mx-auto">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="" id="buttons">
+                                <h5 class="font-bold text-xl mb-6">Buttons</h5>
+
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div *ngFor="let item of buttons" class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">{{item.title}}</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let el of item.style" class="inline-block m-0.5">
+                                                    <a routerLink="#" class={{el.class}}>{{el.name}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Button Size</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let item of btnSize" class="inline-block m-0.5">
+                                                    <a routerLink="#" class={{item.class}}>{{item.name}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Button Icons</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let item of btnIcon" class="inline-block m-0.5">
+                                                    <a routerLink="#" class={{item.style}}><i [attr.data-feather]="item.icon" class="h-4 w-4"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+                            
+                            <div class="" id="badges">
+                                <h5 class="font-bold text-xl mb-6">Badges</h5>
+                                
+                                <div *ngFor="let item of badges" class="grid grid-cols-1 gap-6 mt-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">{{item.title}}</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let el of item.style" class="inline-block">
+                                                    <span class={{el.class}}>{{el.name}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+        
+                            <div class="" id="alerts">
+                                <h5 class="font-bold text-xl mb-6">Alerts</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Alerts</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <div class="space-y-3">
+                                                <div *ngFor="let item of alerts" class={{item.style}}>{{item.name}}</div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Soft Alerts</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <div class="space-y-3">
+                                                <div *ngFor="let item of softAlerts" class={{item.style}}>{{item.name}}</div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Alert with icon</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <div class="space-y-3">
+                                                <div *ngFor="let item of iconAlerts" class={{item.style}}><i class={{item.icon}}></i> {{item.name}}</div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Alert with Link</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <div class="space-y-3">
+                                                <div *ngFor="let item of iconAlerts" class={{item.style}}>{{item.name}} <a routerLink="" class="font-bold ms-1">Click here!</a></div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="dropdowns">
+                                <h5 class="font-bold text-xl mb-6">Dropdowns</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Dropdowns</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md" type="button" (click)="onDropdownClick()">
+                                                        Indigo <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white rounded-md" type="button" (click)="onDropdownClick2()">
+                                                        Emerald <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 " [ngClass]="isDropdown2 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-yellow-500 hover:bg-yellow-600 border-yellow-500 hover:border-yellow-600 text-white rounded-md" type="button" (click)="onDropdownClick3()">
+                                                        Yellow <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 " [ngClass]="isDropdown3 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white rounded-md" type="button" (click)="onDropdownClick4()">
+                                                        Red <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 " [ngClass]="isDropdown4 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-sky-500 hover:bg-sky-600 border-sky-500 hover:border-sky-600 text-white rounded-md" type="button" (click)="onDropdownClick5()">
+                                                        Sky <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 " [ngClass]="isDropdown5 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-cyan-500 hover:bg-cyan-600 border-cyan-500 hover:border-cyan-600 text-white rounded-md" type="button" (click)="onDropdownClick6()">
+                                                        Cyan <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown6 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white rounded-md" type="button" (click)="onDropdownClick7()">
+                                                        Blue <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown7 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-orange-600 hover:bg-orange-700 border-orange-600 hover:border-orange-700 text-white rounded-md" type="button" (click)="onDropdownClick8()">
+                                                        Orange <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown8 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-purple-600 hover:bg-purple-700 border-purple-600 hover:border-purple-700 text-white rounded-md" type="button" (click)="onDropdownClick9()">
+                                                        Purple <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown9 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-gray-800 hover:bg-gray-950 border-gray-800 hover:border-gray-950 text-white rounded-md" type="button" (click)="onDropdownClick10()">
+                                                        Dark <i class="uil uil-angle-down text-[20px] align-middle inline-block"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown10 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Icon Dropdowns</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md" type="button" (click)="onDropdownClick11()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown11 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-indigo-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white rounded-md" type="button" (click)="onDropdownClick12()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown12 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-emerald-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button data-dropdown-toggle="dropdown" class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-yellow-500 hover:bg-yellow-600 border-yellow-500 hover:border-yellow-600 text-white rounded-md" type="button" (click)="onDropdownClick13()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown13 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-yellow-500">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button data-dropdown-toggle="dropdown" class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white rounded-md" type="button" (click)="onDropdownClick14()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown14 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-red-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-sky-500 hover:bg-sky-600 border-sky-500 hover:border-sky-600 text-white rounded-md" type="button" (click)="onDropdownClick15()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown15 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-sky-500">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-cyan-500 hover:bg-cyan-600 border-cyan-500 hover:border-cyan-600 text-white rounded-md" type="button" (click)="onDropdownClick16()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown16 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-cyan-500">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white rounded-md" type="button" (click)="onDropdownClick17()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown17 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-blue-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-orange-600 hover:bg-orange-700 border-orange-600 hover:border-orange-700 text-white rounded-md" type="button" (click)="onDropdownClick18()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown18 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-orange-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-purple-600 hover:bg-purple-700 border-purple-600 hover:border-purple-700 text-white rounded-md" type="button" (click)="onDropdownClick19()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown19 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-purple-600">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                
+                                                <li class="dropdown inline-block relative m-0.5">
+                                                    <button class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-gray-800 hover:bg-gray-950 border-gray-800 hover:border-gray-950 text-white rounded-md" type="button" (click)="onDropdownClick20()">
+                                                        <i class="uil uil-setting"></i>
+                                                    </button>
+                                                    <!-- Dropdown menu -->
+                                                    <div class="dropdown-menu absolute start-0 m-0 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-700" [ngClass]="isDropdown20 === false ? 'hidden' : '' ">
+                                                        <ul class="py-2 text-start">
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">Home</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">Service</a>
+                                                            </li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">About us</a>
+                                                            </li>
+                                                            <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                            <li class="ms-0">
+                                                                <a routerLink="" class="block font-medium py-1.5 px-4 hover:text-gray-800 dark:hover:text-white">Contact</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li><!--end dropdown-->
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="text-colors">
+                                <h5 class="font-bold text-xl mb-6">Text Colors</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Text Colors</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let item of textColor" class="ms-0 mb-1">
+                                                    <span class="font-semibold" [ngClass]="item.style">{{item.name}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+                            
+                            <div class="" id="backgrounds">
+                                <h5 class="font-bold text-xl mb-6">Background Colors</h5>
+                                
+                                <div class="grid grid-cols-1 gap-[30px]">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Background Colors</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let item of bgColor" class={{item.style}}>{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="opacity">
+                                <h5 class="font-bold text-xl mb-6">Opacity</h5>
+                                
+                                <div class="grid grid-cols-1 gap-[30px]">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Opacity</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let item of opacity" class="inline-block shadow dark:shadow-gray-800 rounded-md py-2 px-3 m-0.5" [ngClass]="item.style">{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="accordions">
+                                <h5 class="font-bold text-xl mb-6">Accordions</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Accordion</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800 pt-0">
+                                            <div>
+                                                <div *ngFor="let item of accordianData" class="relative shadow dark:shadow-gray-700 rounded-md overflow-hidden mt-5">
+                                                    <h2 class="text-base font-semibold" id="accordion-collapse-heading-1">
+                                                        <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-start" [ngClass]="activeIndex === item.id ? 'bg-gray-50 dark:bg-slate-800 text-indigo-600' : '' " (click)="onAccordionClick(item.id)">
+                                                            <span>{{item.title}}</span>
+                                                            <svg data-accordion-icon class="size-4 shrink-0" [ngClass]="activeIndex === item.id ? 'rotate-180' : '' " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </h2>
+                                                    <div [ngClass]="activeIndex === item.id ? '' : 'hidden' ">
+                                                        <div class="p-5">
+                                                            <p class="text-slate-400 dark:text-gray-400">{{item.desc}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="nav-tabs">
+                                <h5 class="font-bold text-xl mb-6">Nav Tabs</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Horizontal Nav Tabs</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="inline-block w-fit mx-auto flex-wrap justify-center text-center p-2 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
+                                                <li class="inline-block">
+                                                    <button class="px-4 py-1 text-sm font-semibold rounded-md w-full hover:text-indigo-600 duration-500" [ngClass]="activeTab === 1 ? 'text-white bg-indigo-600 hover:text-white' : '' " (click)="onTabClick(1)">Tab One</button>
+                                                </li>
+                                                <li class="inline-block">
+                                                    <button class="px-4 py-1 text-sm font-semibold rounded-md w-full hover:text-indigo-600 duration-500" [ngClass]="activeTab === 2 ? 'text-white bg-indigo-600 hover:text-white' : '' " (click)="onTabClick(2)">Tab Two</button>
+                                                </li>
+                                            </ul>
+                        
+                                            <div class="mt-6">
+                                                <div [ngClass]="activeTab === 1 ? '' : 'hidden'">
+                                                    <p class="text-slate-400">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore cum vero quae officiis earum odio, consequatur perferendis sapiente quo illum ipsam illo harum maiores minima dolor adipisci recusandae labore? Harum.</p>
+                                                </div>
+                                                
+                                                <div [ngClass]="activeTab === 2 ? '' : 'hidden'">
+                                                    <p class="text-slate-400">1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore cum vero quae officiis earum odio, consequatur perferendis sapiente quo illum ipsam illo harum maiores minima dolor adipisci recusandae labore? Harum.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Vertical Nav Tabs</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <div class="grid md:grid-cols-12 grid-cols-1 gap-6">
+                                                <div class="lg:col-span-4 md:col-span-5">
+                                                    <ul class="flex-column text-center space-y-2">
+                                                        <li>
+                                                            <button class="px-4 py-1 text-sm font-semibold rounded-md w-full hover:text-indigo-600 duration-500" [ngClass]="activeTab2 === 1 ? 'text-white bg-indigo-600 hover:text-white' : '' " (click)="onTabClick2(1)">Tab One</button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="px-4 py-1 text-sm font-semibold rounded-md w-full hover:text-indigo-600 duration-500" [ngClass]="activeTab2 === 2 ? 'text-white bg-indigo-600 hover:text-white' : '' " (click)="onTabClick2(2)">Tab Two</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="lg:col-span-8 md:col-span-7">
+                                                    <div id="myTabContent">
+                                                        <div [ngClass]="activeTab2 === 1 ? '' : 'hidden'">
+                                                            <p class="text-slate-400">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore cum vero quae officiis earum odio, consequatur perferendis sapiente quo illum ipsam illo harum maiores minima dolor adipisci recusandae labore? Harum.</p>
+                                                        </div>
+                                                        
+                                                        <div [ngClass]="activeTab2 === 2 ? '' : 'hidden'">
+                                                            <p class="text-slate-400">1  Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore cum vero quae officiis earum odio, consequatur perferendis sapiente quo illum ipsam illo harum maiores minima dolor adipisci recusandae labore? Harum.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="form-inputs">
+                                <h5 class="font-bold text-xl mb-6">Form Inputs</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Form Inputs</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <form>
+                                                <div class="grid grid-cols-1 gap-5">
+                                                    <div class="">
+                                                        <label class="form-label font-semibold">First Name:</label>
+                                                        <input type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="First Name:" id="firstname" name="name" required="">
+                                                    </div>
+                
+                                                    <div class="">
+                                                        <label class="form-label font-semibold">Username:</label>
+                                                        <div class="relative mt-2">
+                                                            <span class="absolute top-0.5 start-0.5 w-9 h-9 text-xl bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="basic-addon1"><i class="uil uil-at"></i></span>
+                                                            <input type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Username" required>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div class="">
+                                                        <label class="form-label font-semibold">Your Email:</label>
+                                                        <input type="email" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Email" name="email" required="">
+                                                    </div>
+                
+                                                    <div class="">
+                                                        <label class="font-semibold">Select Input:</label>
+                                                        <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                                            <option value="USA">USA</option>
+                                                            <option value="CAD">Canada</option>
+                                                            <option value="CHINA">China</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="">
+                                                        <label class="form-label font-semibold">Number:</label>
+                                                        <input type="number" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Zip:" id="zipcode" name="number" required="">
+                                                    </div>
+
+                                                    <div class="">
+                                                        <h6 class="font-semibold">Form Checkbox</h6>
+
+                                                        <div class="flex items-center w-full mb-0">
+                                                            <input class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" type="checkbox" checked value="" id="sameaddress">
+                                                            <label class="form-check-label text-slate-400" for="sameaddress">Checkbox 1</label>
+                                                        </div>
+                
+                                                        <div class="flex items-center w-full mb-0">
+                                                            <input class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" type="checkbox" value="" id="savenexttime">
+                                                            <label class="form-check-label text-slate-400" for="savenexttime">Checkbox 2</label>
+                                                        </div>
+                
+                                                        <div class="flex items-center w-full mb-0">
+                                                            <input class="form-checkbox rounded border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" type="checkbox" disabled value="" id="checkbox-d">
+                                                            <label class="form-check-label text-slate-400" for="checkbox-d">Disabled Checkbox</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="">
+                                                        <h6 class="font-semibold">Form Radio</h6>
+
+                                                        <div class="block">
+                                                            <div>
+                                                                <label class="inline-flex items-center">
+                                                                    <input type="radio" class="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" checked name="radio-colors" value="1">
+                                                                    <span class="text-slate-400">Radio 1</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                
+                                                        <div class="block mt-2">
+                                                            <div>
+                                                                <label class="inline-flex items-center">
+                                                                    <input type="radio" class="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" name="radio-colors" value="1">
+                                                                    <span class="text-slate-400">Radio 2</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                
+                                                        <div class="block mt-2">
+                                                            <div>
+                                                                <label class="inline-flex items-center">
+                                                                    <input type="radio" class="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" disabled name="radio-colors" value="1">
+                                                                    <span class="text-slate-400">Disabled Radio</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="shadows">
+                                <h5 class="font-bold text-xl mb-6">Shadows</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Shadows</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none space-y-6">
+                                                <li *ngFor="let item of shadow" class="dark:shadow-gray-700 py-2 px-3 m-0.5 bg-white dark:bg-slate-900 text-slate-400" [ngClass]="item.style">{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+
+                            <div class="" id="borders">
+                                <h5 class="font-bold text-xl mb-6">Borders</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Borders</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none space-x-4 space-y-4">
+                                                <li *ngFor="let item of borders" class="inline-block dark:border-gray-800 sm:w-[150px] py-2 px-3 m-0.5 bg-white dark:bg-slate-900 text-slate-400" [ngClass]="item.style">{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Border Styles</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none space-x-4 space-y-4">
+                                                <li *ngFor="let item of borderStyle" class="inline-block dark:border-gray-800 sm:w-[150px] py-2 px-3 m-0.5 bg-white dark:bg-slate-900 text-slate-400" [ngClass]="item.style">{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Border Radious</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none space-x-4 space-y-4">
+                                                <li *ngFor="let item of borderRadious" class="inline-block shadow dark:shadow-gray-700 py-6 px-3 m-0.5 bg-white dark:bg-slate-900 text-slate-400" [ngClass]="item.style">{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="" id="breadcrumbs">
+                                <h5 class="font-bold text-xl mb-6">Breadcrumb</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Breadcrumb</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="tracking-[0.5px] mb-0 inline-block">
+                                                <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600"><a routerLink="/">Techwind</a></li>
+                                                <li class="inline-block text-base text-slate-950 dark:text-white/70 mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
+                                                <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600"><a routerLink="">Components</a></li>
+                                                <li class="inline-block text-base text-slate-950 dark:text-white/70 mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
+                                                <li class="inline-block uppercase text-[13px] font-bold text-indigo-600" aria-current="page">Typography</li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="paginations">
+                                <h5 class="font-bold text-xl mb-6">Pagination</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Pagination</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="inline-flex items-center -space-x-px">
+                                                    <li>
+                                                        <a routerLink="#" class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-lg hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600">
+                                                            <i class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a routerLink="#" class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600">1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a routerLink="#" class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600">2</a>
+                                                    </li>
+                                                    <li>
+                                                        <a routerLink="#" aria-current="page" class="z-10 size-[40px] inline-flex justify-center items-center text-white bg-indigo-600 border border-indigo-600">3</a>
+                                                    </li>
+                                                    <li>
+                                                        <a routerLink="#" class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600">4</a>
+                                                    </li>
+                                                    <li>
+                                                        <a routerLink="#" class="size-[40px] inline-flex justify-center items-center text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600">5</a>
+                                                    </li>
+                                                    <li>
+                                                        <a routerLink="#" class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-lg hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600">
+                                                            <i class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="modals">
+                                <h5 class="font-bold text-xl mb-6">Modals</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Modals</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <a routerLink="#" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md" (click)="modalHandler()">
+                                                Modal
+                                            </a>
+
+                                            <!-- Start Modal -->
+                                           
+                                            <!-- End Modal -->
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="tables">
+                                <h5 class="font-bold text-xl mb-6">Tables</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Tables</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
+                                                <table class="w-full text-start">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="px-4 py-5 text-start">Lessons</th>
+                                                            <th class="px-4 py-5 text-end">Time</th>
+                                                        </tr>
+                                                    </thead>
+                    
+                                                    <tbody>
+                                                        <tr class="border-t border-gray-100 dark:border-gray-700">
+                                                            <td class="p-4"><a routerLink="" class=""><i class="uil uil-clipboard-alt"></i> Lesson 1</a></td>
+                                                            <td class="p-4 text-end"><span class="bg-indigo-600/5 text-indigo-600 text-xs font-bold px-2.5 py-0.5 rounded h-5">Watch Free</span></td>
+                                                        </tr>
+                    
+                                                        <tr class="border-t border-gray-100 dark:border-gray-700">
+                                                            <td class="p-4"><a routerLink="" class=""><i class="uil uil-clipboard-alt"></i> Lesson 2</a></td>
+                                                            <td class="p-4 text-end"><i class="uil uil-lock"></i></td>
+                                                        </tr>
+                    
+                                                        <tr class="border-t border-gray-100 dark:border-gray-700">
+                                                            <td class="p-4"><a routerLink="" class=""><i class="uil uil-clipboard-alt"></i> Lesson 3</a></td>
+                                                            <td class="p-4 text-end"><i class="uil uil-lock"></i></td>
+                                                        </tr>
+                    
+                                                        <tr class="border-t border-gray-100 dark:border-gray-700">
+                                                            <td class="p-4"><a routerLink="" class=""><i class="uil uil-clipboard-alt"></i> Lesson 4</a></td>
+                                                            <td class="p-4 text-end"><i class="uil uil-lock"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+        
+                            <div class="" id="headings">
+                                <h5 class="font-bold text-xl mb-6">Heading</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Heading</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <ul class="list-none">
+                                                <li *ngFor="let item of heading" class="mt-2"><span class="font-semibold text-slate-400" [ngClass]="item.style">Hello</span>{{item.name}}</li>
+                                            </ul>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+                                <div ></div>
+                            <div class="" id="font-weights">
+                                <h5 class="font-bold text-xl mb-6">Font Weight</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Font Weight</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800 pt-3">
+                                            <p *ngFor="let item of fontWeight" class="text-lg text-red-600 mt-2">{{item.title1}} <span class="text-slate-400" [ngClass]="item.style">{{item.title2}}</span></p>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+
+                            <div class="" id="icons">
+                                <h5 class="font-bold text-xl mb-6">Icons</h5>
+                                
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="shadow dark:shadow-slate-800 rounded bg-white dark:bg-slate-900">
+                                        <div class="p-5">
+                                            <h5 class="text-lg font-semibold">Icons</h5>
+                                        </div>
+                                        <div class="p-5 border-t border-gray-100 dark:border-slate-800">
+                                            <h6 class="text-lg font-medium">Feather Icons</h6>
+                                            <p class="text-slate-400">There are 280+ feather icons and you can get all icons info from here: <a routerLink="https://feathericons.com/" target="_blank"><code class="text-indigo-600">https://feathericons.com/</code></a></p>
+                                            <h6 class="text-slate-400 mb-4 pb-2">Ex. <code class="text-red-600">&lt;i data-feather="mail" class="h-8 w-8"&gt; &lt;/i&gt;</code></h6>
+
+                                            <ul class="list-none">
+                                                <li class="inline-block"><i data-feather="user" class="h-8 w-8 me-2"></i></li>
+                                                <li class="inline-block"><i data-feather="facebook" class="h-8 w-8 me-2"></i></li>
+                                                <li class="inline-block"><i data-feather="map-pin" class="h-8 w-8 me-2"></i></li>
+                                                <li class="inline-block"><i data-feather="linkedin" class="h-8 w-8 me-2"></i></li>
+                                                <li class="inline-block"><i data-feather="camera" class="h-8 w-8 me-2"></i></li>
+                                                <li class="inline-block"><i data-feather="mail" class="h-8 w-8 me-2"></i></li>
+                                            </ul>
+
+                                            <h6 class="mt-6 text-lg font-medium">Material Design Icons</h6>
+                                            <p class="text-slate-400">There are 4400+ Material Design icons and you can get all icons info from here: <a routerLink="https://materialdesignicons.com/" target="_blank"><code class="text-indigo-600">https://materialdesignicons.com/</code></a></p>
+                                            <h6 class="text-slate-400 mb-4 pb-2">Ex. <code class="text-red-600">&lt;i class="mdi mdi-home"&gt; &lt;/i&gt;</code></h6>
+
+                                            <i class="mdi mdi-home text-lg me-2"></i>
+                                            <i class="mdi mdi-facebook text-lg me-2"></i>
+                                            <i class="mdi mdi-chevron-tight text-lg me-2"></i>
+                                            <i class="mdi mdi-camera-image text-lg me-2"></i>
+                                            <i class="mdi mdi-car-light-high text-lg me-2"></i>
+                                            <i class="mdi mdi-silverware-fork-knife text-lg me-2"></i>
+
+                                            <h6 class="mt-6 text-lg font-medium">Iconscout (Unicons) Icons</h6>
+                                            <p class="text-slate-400">There are 1100+ Iconscout (Unicons) Icons and you can get all icons info from here: <a href="https://iconscout.com/unicons" target="_blank"><code class="text-indigo-600">https://www.flaticon.com/packs/basic-icon</code></a></p>
+                                            <h6 class="text-slate-400 mb-4 pb-2">Ex. <code class="text-red-600"><br>&lt;i class="uil uil-0-plus"&gt;&lt;/i&gt;<br>&lt;/span&gt;</code></h6>
+
+                                            <span class="text-lg text-indigo-600 me-2"><i class="uil uil-0-plus"></i></span>
+                                            <span class="text-lg text-indigo-600 me-2"><i class="uil uil-android"></i></span>
+                                            <span class="text-lg text-indigo-600 me-2"><i class="uil uil-bitcoin"></i></span>
+                                            <span class="text-lg text-indigo-600 me-2"><i class="uil uil-calendar-alt"></i></span>
+                                            <span class="text-lg text-indigo-600"><i class="uil uil-chart-pie-alt"></i></span>
+                                        </div>
+                                    </div><!--end content-->
+                                </div>
+                            </div>
+                        </div><!--end grid-->
+                    </div>
+                </div>
+                <!-- End Content -->
+            </div>
+        </div>
+
+        <!-- Footer Start -->
+       <app-footer/>
+        <!-- End -->
+    </main>
+    <!--End page-content" -->
+</div>
+<div [ngClass]="isModalOpen === false ? 'hidden' : '' " class="fixed top-0 left-0 bottom-0 right-0 w-full bg-slate-900/50 h-screen flex items-center justify-center z-999">
+    <div class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white inline-block">
+        <div class="relative h-auto md:w-[480px] w-300px">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="font-bold text-lg">Add Payment Method</h3>
+                <form method="dialog">
+                    <button class="size-6 flex justify-center items-center shadow dark:shadow-gray-800 rounded-md btn-ghost" (click)="modalHandler()"><i data-feather="x" class="size-4"></i></button>
+                </form>
+            </div>
+            <div class="p-6 text-center">
+                <div class="relative overflow-hidden text-transparent -m-3">
+                    <i data-feather="hexagon" class="size-32 fill-red-600/5 mx-auto"></i>
+                    <div class="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-red-600 rounded-xl duration-500 text-4xl flex align-middle justify-center items-center">
+                        <i class="uil uil-heart-break"></i>
+                    </div>
+                </div>
+        
+                <h4 class="text-xl font-semibold mt-6">Your wishlist is empty.</h4>
+                <p class="text-slate-400 my-3">Create your first wishlist request...</p>
+    
+                <a routerLink="" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-transparent hover:bg-indigo-600 border border-indigo-600 text-indigo-600 hover:text-white rounded-md mt-2">Create a new wishlist</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

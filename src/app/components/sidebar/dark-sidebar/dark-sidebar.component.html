@@ -1,0 +1,99 @@
+<nav id="sidebar" class="sidebar-wrapper sidebar-dark">
+  <div class="sidebar-content">
+    <div class="sidebar-brand">
+      <a routerLink="/"
+        ><img
+          src="assets/images/logo-domus-one-transparente.webp"
+          height="auto"
+          width="120px"
+          alt=""
+      /></a>
+    </div>
+
+    <ul
+      class="sidebar-menu border-t border-white/10"
+      simplebar
+      style="height: calc(100% - 70px)"
+    >
+      <li
+        class="sidebar-dropdown"
+        [ngClass]="['/', '/', '/'].includes(activeManu) ? 'active ms-0' : ''"
+      >
+        <a routerLink="/services" (click)="subManu('/index-item')"
+          ><i class="uil uil-chart-line me-2"></i>Panel de administración</a
+        >
+      </li>
+
+      <!-- servicios y proveedores -->
+
+      <li
+        class="sidebar-dropdown"
+        [ngClass]="
+          ['/chat', '/email', '/calendar', '/app-item'].includes(activeManu)
+            ? 'active ms-0'
+            : ''
+        "
+      >
+        <a routerLink="#" (click)="subManu('/app-item')">
+          <i class="uil uil-apps me-2"></i>Servicios
+        </a>
+        <div
+          class="sidebar-submenu"
+          [ngClass]="
+            ['/chat', '/email', '/calendar', '/app-item'].includes(manuOpen)
+              ? 'block ms-0'
+              : ''
+          "
+        >
+          <ul>
+            <li
+              [ngClass]="activeManu === '/create-service' ? 'active ms-0' : ''"
+            >
+              <a routerLink="/create-service">Crear servicio</a>
+            </li>
+            <li [ngClass]="activeManu === '/drop-service' ? 'active ms-0' : ''">
+              <a routerLink="/drop-service">Eliminar servicio</a>
+            </li>
+            <li
+              [ngClass]="activeManu === '/update-service' ? 'active ms-0' : ''"
+            >
+              <a routerLink="/update-service">Actualizar servicio</a>
+            </li>
+          </ul>
+        </div>
+
+        <!--proveedores -->
+
+        <a routerLink="#" (click)="subManu('/provider-item')">
+          <i class="uil uil-apps me-2"></i>Proveedores
+        </a>
+        <div
+          class="sidebar-submenu"
+          [ngClass]="manuOpen === '/provider-item' ? 'block ms-0' : ''"
+        >
+          <ul>
+            <li [ngClass]="activeManu === '/providers' ? 'active ms-0' : ''">
+              <a routerLink="/providers">Lista de proveedores</a>
+            </li>
+            <li
+              [ngClass]="activeManu === '/create-provider' ? 'active ms-0' : ''"
+            >
+              <a routerLink="/create-provider">Crear proveedor</a>
+            </li>
+            <li
+              [ngClass]="activeManu === '/drop-provider' ? 'active ms-0' : ''"
+            >
+              <a routerLink="/drop-provider">Eliminar proveedor</a>
+            </li>
+            <li
+              [ngClass]="activeManu === '/update-provider' ? 'active ms-0' : ''"
+            >
+              <a routerLink="/update-provider">Actualizar proveedor</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <!-- sidebar-menu  -->
+  </div>
+</nav>

@@ -1,0 +1,49 @@
+<div class="page-wrapper" [ngClass]="{ 'toggled': activeSidebar }">
+    <!-- sidebar-wrapper -->
+    <app-dark-sidebar/>
+    <!-- sidebar-wrapper  -->
+
+    <!-- Start Page Content -->
+    <main class="page-content bg-gray-50 dark:bg-slate-800">
+        <!-- Top Header -->
+        <app-top-header (toggleClass)="toggleClass()"/>
+        <!-- Top Header -->
+
+        <div class="container-fluid relative px-3">
+            <div class="layout-specing">
+                <!-- Start Content -->
+               <app-features/>
+
+                <div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6">
+                    <div class="lg:col-span-8">
+                       <app-analytics/>
+                    </div>
+
+                    <div class="lg:col-span-4">
+                        <app-country/>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6">
+                    <div class="xl:col-span-5 lg:col-span-12">
+                        <app-order/>
+                    </div>
+
+                    <div class="xl:col-span-4 lg:col-span-6">
+                        <app-chat-data/>
+                    </div>
+
+                    <div class="xl:col-span-3 lg:col-span-6">
+                        <app-top-product/>
+                    </div>
+                </div>
+                <!-- End Content -->
+            </div>
+        </div><!--end container-->
+
+        <!-- Footer Start -->
+       <app-footer/>
+        <!-- End -->
+    </main>
+    <!--End page-content" -->
+</div>

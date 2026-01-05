@@ -1,0 +1,63 @@
+<div class="page-wrapper" [ngClass]="{ toggled: activeSidebar }">
+  <app-dark-sidebar />
+  <main class="page-content bg-gray-50 dark:bg-slate-800">
+    <app-top-header (toggleClass)="toggleClass()" />
+    <div class="container-fluid relative px-3">
+      <div class="layout-specing">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h5 class="text-xl font-bold">Eliminar servicio</h5>
+            <h6 class="text-slate-400 font-semibold">
+              Elimina un proveedor por ID
+            </h6>
+          </div>
+        </div>
+        <div class="grid xl:grid-cols-12 gap-6">
+          <div class="xl:col-span-6 col-span-12">
+            <div
+              class="relative overflow-hidden rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-900 p-4"
+            >
+              <form (ngSubmit)="dropProvider()" #dropForm="ngForm">
+                <div class="mb-4">
+                  <label for="providerId" class="form-label font-semibold"
+                    >ID del proveedor</label
+                  >
+                  <input
+                    type="number"
+                    id="providerId"
+                    name="providerId"
+                    class="form-input w-full py-2 px-3 h-10 bg-gray-50 dark:bg-slate-800 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                    [(ngModel)]="providerId"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="btn w-full"
+                  [ngClass]="{ 'bg-red-900 text-white': true }"
+                  [disabled]="dropForm.invalid"
+                  style="
+                    border-radius: 8px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  "
+                >
+                  Eliminar proveedor
+                </button>
+                <div *ngIf="error" class="alert alert-danger mt-3">
+                  {{ error }}
+                </div>
+                <div *ngIf="success" class="alert alert-success mt-3">
+                  {{ success }}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer />
+  </main>
+</div>

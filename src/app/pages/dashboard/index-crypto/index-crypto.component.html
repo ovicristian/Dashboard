@@ -1,0 +1,398 @@
+<div class="page-wrapper" [ngClass]="{ 'toggled': activeSidebar }">
+    <!-- sidebar-wrapper -->
+    <app-dark-sidebar/>
+    <!-- sidebar-wrapper  -->
+
+    <!-- Start Page Content -->
+    <main class="page-content bg-gray-50 dark:bg-slate-800">
+        <!-- Top Header -->
+        <app-top-header (toggleClass)="toggleClass()"/>
+        <!-- Top Header -->
+
+        <div class="container-fluid relative px-3">
+            <div class="layout-specing">
+                <!-- Start Content -->
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h5 class="text-xl font-bold">Cristina Murfy</h5>
+                        <h6 class="text-slate-400 font-semibold">My balance: <span class="text-emerald-600">$ 45,578.032</span></h6>
+                    </div>
+
+                    <div class="">
+                        <a routerLink="#" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white rounded-md me-1" (click)="onSentClick()">Sent</a>
+                        <a routerLink="#" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white rounded-md" (click)="onRequestClick()">Request</a>
+                    </div>
+                </div>
+
+                <div class="grid xl:grid-cols-12 mt-6 gap-6">
+                    <div class="xl:col-span-8 col-span-12">
+                        <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-900 p-4">
+                            <div id="tradingview_123"></div>
+                        </div>
+                    </div>
+
+                    <div class="xl:col-span-4 col-span-12">
+                        <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
+                            <div class="p-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
+                                <h6 class="text-lg font-semibold">Watchlists</h6>
+                                
+                                <a routerLink="#" class="relative inline-block font-semibold tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:transition-all after:duration-500 text-slate-400 dark:text-white/70 hover:text-indigo-600 dark:hover:text-white after:bg-indigo-600 dark:after:bg-white duration-500">See More <i class="uil uil-arrow-right"></i></a>
+                            </div>
+                            <div class="h-[521px]" data-simplebar>
+                                <table class="w-full text-start">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-4 py-5 font-semibold text-start">Name</th>
+                                            <th class="px-4 py-5 font-semibold text-center">Last</th>
+                                            <th class="px-4 py-5 font-semibold text-center">Chg</th>
+                                            <th class="px-4 py-5 font-semibold text-end">Chg%</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody>
+                                        <tr *ngFor="let item of watchlistData" class="border-t border-gray-100 dark:border-gray-700">
+                                            <td class="p-4"><a routerLink="" class="flex items-center hover:text-indigo-600 font-semibold"><img [src]="item.image" class="h-11 w-11 rounded-full shadow dark:shadow-gray-700 p-1.5 me-1" alt=""> {{item.name}}</a></td>
+                                            <td class="p-4 text-center">{{item.last}}</td>
+                                            <td class="p-4 text-center " [ngClass]="item.status === 'profit' ? 'text-emerald-600' : 'text-red-600' ">{{item.change}}</td>
+                                            <td class="p-4 text-end" [ngClass]="item.status === 'profit' ? 'text-emerald-600' : 'text-red-600' ">{{item.PreChange}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <app-coin-data/>
+
+                <div class="grid grid-cols-12 mt-6 gap-6">
+                    <div class="xl:col-span-6 col-span-12">
+                        <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
+                                <div>
+                                    <h6 class="text-lg font-semibold">Transections</h6>
+                                    <h6 class="text-slate-400 font-semibold">Latest Transections</h6>
+                                </div>
+                                
+                                <div class="position-relative">
+                                    <select class="form-select form-input w-full py-2 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 focus:border-gray-200 dark:border-gray-800 dark:focus:border-gray-700 focus:ring-0" id="yearchart">
+                                        <option value="T" selected>Today</option>
+                                        <option value="W">This Week</option>
+                                        <option value="M">This Month</option>
+                                        <option value="Y">This Year</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="h-[290px]" data-simplebar>
+                                <table class="w-full text-start">
+                                    <thead>
+                                        <tr class="">
+                                            <th class="p-4 font-semibold text-start">Type</th>
+                                            <th class="p-4 font-semibold text-center">Assets</th>
+                                            <th class="p-4 font-semibold text-center">Date</th>
+                                            <th class="p-4 font-semibold text-center">Amount</th>
+                                            <th class="p-4 font-semibold text-center">Wallet</th>
+                                            <th class="p-4 font-semibold text-end">Status</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody class="border-t border-gray-100 dark:border-gray-800">
+                                        <tr *ngFor="let item of transections">
+                                            <td class="px-4 pt-3 text-start"><span class=" inline-block text-white text-[12px] font-bold px-2.5 rounded" [ngClass]="item.type === 'Buy' ? 'bg-emerald-600' : 'bg-red-600' ">{{item.type}}</span></td>
+                                            <td class="px-4 pt-3 text-center">{{item.assets}}</td>
+                                            <td class="px-4 pt-3 text-center">{{item.date}}</td>
+                                            <td class="px-4 pt-3 text-center">{{item.amount}}</td>
+                                            <td class="px-4 pt-3 text-center text-indigo-600">{{item.wallet}}</td>
+                                            <td *ngIf="item.status === 'Progress' " class="px-4 pt-3 text-end text-red-600"><span class="bg-cyan-500/10 text-cyan-500 inline-block text-[12px] font-bold px-2.5 rounded">{{item.status}}</span></td>
+                                            <td *ngIf="item.status === 'Pending' " class="px-4 pt-3 text-end text-red-600"><span class="bg-red-600/10 text-red-600 inline-block text-[12px] font-bold px-2.5 rounded">{{item.status}}</span></td>
+                                            <td *ngIf="item.status === 'Success' " class="px-4 pt-3 text-end text-red-600"><span class="bg-emerald-600/10 text-emerald-600 inline-block text-[12px] font-bold px-2.5 rounded">{{item.status}}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xl:col-span-3 md:col-span-6 col-span-12">
+                        <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
+                                <div>
+                                    <h6 class="text-lg font-semibold">Exchange</h6>
+                                    <h6 class="text-slate-400 font-semibold">1BTC = <span class="text-emerald-600">$ 27,427.17</span></h6>
+                                </div>
+                                
+                                <div class="position-relative">
+                                    <select class="form-select form-input w-full py-2 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 focus:border-gray-200 dark:border-gray-800 dark:focus:border-gray-700 focus:ring-0" id="yearchart">
+                                        <option value="Y" selected>Market</option>
+                                        <option value="M">Market</option>
+                                        <option value="W">Market</option>
+                                        <option value="T">Market</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="p-4">
+                                <ul class="inline-block w-full mx-auto flex-wrap justify-center text-center p-2 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
+                                    <li role="presentation" class="inline-block w-[47%]">
+                                        <button class="px-4 py-1 text-sm font-semibold rounded-md w-full hover:text-indigo-600 duration-500" [ngClass]="isActiveTab === 1 ? 'text-white bg-indigo-600 hover:text-white' : '' " (click)="onTabClick(1)">Buy or Sell</button>
+                                    </li>
+                                    <li role="presentation" class="inline-block w-[47%]">
+                                        <button class="px-4 py-1 text-sm font-semibold rounded-md w-full hover:text-indigo-600 duration-500" [ngClass]="isActiveTab === 2 ? 'text-white bg-indigo-600 hover:text-white' : '' " (click)="onTabClick(2)">Calculator</button>
+                                    </li>
+                                </ul>
+            
+                                <div id="StarterContent" class="mt-4">
+                                    <div [ngClass]="isActiveTab === 1 ? '' : 'hidden' "> 
+                                        <form action="">
+                                            <div class="grid grid-cols-1 gap-4">
+                                                <div class="">
+                                                    <label class="form-label font-semibold hidden">Username:</label>
+                                                    <div class="relative">
+                                                        <span class="absolute top-0.5 start-0.5 h-9 px-2 bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="basic-addon1">Amount</span>
+
+                                                        <input type="text" class="form-input ps-[88px] pe-[52px] w-full py-2 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Username" required>
+
+                                                        <span class="absolute top-0.5 end-0.5 h-9 px-2 bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="basic-addon1">BTC</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="">
+                                                    <div class="relative rounded overflow-hidden">
+                                                        <div class="absolute bg-gray-100 dark:bg-slate-800">
+                                                            <select class="form-select form-input w-[100px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 outline-none border-0 focus:ring-0">
+                                                                <option value="USA">USA</option>
+                                                                <option value="CAD">Canada</option>
+                                                                <option value="CHINA">China</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <input type="number" class="form-input ps-28 w-full py-2 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="$ 25,000" required>
+
+                                                        <span class="absolute top-0.5 end-0.5 h-9 px-2 bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="basic-addon1">$ Dollar</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="">
+                                                    <div class="relative">
+                                                        <span class="absolute top-0.5 start-0.5 h-9 px-2 bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="basic-addon1">Total</span>
+
+                                                        <input type="number" class="form-input ps-[88px] pe-[52px] w-full py-2 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="" required>
+
+                                                        <span class="absolute top-0.5 end-0.5 h-9 px-2 bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="basic-addon1">$ Dollar</span>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <a routerLink="#" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white rounded-md me-1">Buy Now</a>
+                                                    <a routerLink="#" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white rounded-md">Sell Now</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <div [ngClass]="isActiveTab === 2 ? '' : 'hidden' ">
+                                        <crypto-converter-widget shadow symbol live background-color="#1e293b" border-radius="6px" fiat="united-states-dollar" crypto="bitcoin" amount="1" font-family="sans-serif" decimal-places="2"></crypto-converter-widget>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xl:col-span-3 md:col-span-6 col-span-12">
+                        <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
+                                <div>
+                                    <h6 class="text-lg font-semibold">Orders</h6>
+                                    <h6 class="text-slate-400 font-semibold">My Order List</h6>
+                                </div>
+                                
+                                <div class="position-relative">
+                                    <select class="form-select form-input w-full py-2 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 focus:border-gray-200 dark:border-gray-800 dark:focus:border-gray-700 focus:ring-0" id="yearchart">
+                                        <option value="T" selected>Today</option>
+                                        <option value="W">This Week</option>
+                                        <option value="M">This Month</option>
+                                        <option value="Y">This Year</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="p-4 h-[290px]" data-simplebar>
+                                <div *ngFor="let item of orderData" class="rounded shadow p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <span class="inline-block text-white text-[12px] font-bold px-2.5 rounded" [ngClass]="item.type === 'Buy' ? 'bg-emerald-600' : 'bg-red-600' ">{{item.type
+                                            }}</span> 
+                                            <h6 class="font-semibold mb-0 ms-2">{{item.name}}</h6>
+                                        </div>
+
+                                        <span *ngIf="item.status === 'Success' " class="bg-emerald-600/10 text-emerald-600 inline-block text-[12px] font-bold px-2.5 rounded">{{item.status}}</span>
+                                        <span *ngIf="item.status === 'Pending' " class="bg-red-600/10 text-red-600 inline-block text-[12px] font-bold px-2.5 rounded">{{item.status}}</span>
+                                        <span *ngIf="item.status === 'Progress' " class="bg-cyan-500/10 text-cyan-500 inline-block text-[12px] font-bold px-2.5 rounded">{{item.status}}</span>
+                                    </div>
+
+                                    <div class="flex items-center mt-6">
+                                        <div class="">
+                                            <h6 class="text-slate-400 mb-0">Spend</h6>
+                                            <h6 class="mb-0">{{item.spend}}</h6>
+                                        </div>
+
+                                        <div class="ms-3">
+                                            <h6 class="text-slate-400 mb-0">Recieved</h6>
+                                            <h6 class="mb-0">{{item.recieved}}</h6>
+                                        </div>
+                                    </div>
+                                </div><!--end content-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Content -->
+            </div>
+        </div>
+
+        <!-- Footer Start -->
+       <app-footer/>
+        <!-- End -->
+    </main>
+    <!--End page-content" -->
+</div>
+
+<div class="fixed top-0 left-0 bottom-0 right-0 w-full h-screen bg-slate-900/25 flex items-center justify-center z-999" [ngClass]="isSent === false ? 'hidden' : '' ">
+    <div id="" class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white inline-block">
+        <div class="relative h-auto md:w-[480px] w-300px">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="font-bold text-lg">Send Coin</h3>
+                <form method="dialog">
+                    <button class="size-6 flex justify-center items-center shadow dark:shadow-gray-800 rounded-md btn-ghost" (click)="onSentClick()"><i data-feather="x" class="size-4"></i></button>
+                </form>
+            </div>
+            <div class="p-6">
+                <form action="">
+                    <div class="grid grid-cols-12 gap-3">
+                        <div class="col-span-12">
+                            <label class="font-semibold">Crypto Currency</label>
+                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <option selected>-- Currency --</option>
+                                <option value="BTC">BTC</option>
+                                <option value="ETH">ETH</option>
+                            </select>
+                        </div>
+    
+                        <div class="col-span-12">
+                            <label class="font-semibold">Currency From</label>
+                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <option selected>-- My wallet --</option>
+                                <option value="BTC">BTC</option>
+                                <option value="ETH">ETH</option>
+                            </select>
+                        </div>
+    
+                        <div class="col-span-12">
+                            <label class="form-label font-semibold">To</label>
+                            <div class="relative mt-2">
+                                <span class="absolute top-0.5 start-0.5 size-9 text-xl bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="QUcode"><i class="uil uil-qrcode-scan"></i></span>
+                                <input type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Can you scan" required>
+                            </div>
+                        </div>
+    
+                        <div class="md:col-span-6 col-span-12">
+                            <label class="form-label font-semibold">USD</label>
+                            <div class="relative mt-2">
+                                <span class="absolute top-0.5 start-0.5 size-9 text-xl bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="USD"><i class="uil uil-dollar-sign"></i></span>
+                                <input type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="USD" required>
+                            </div>
+                        </div>
+    
+                        <div class="md:col-span-6 col-span-12">
+                            <label class="form-label font-semibold">BTC</label>
+                            <div class="relative mt-2">
+                                <span class="absolute top-0.5 start-0.5 size-9 text-xl bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="BTC"><i class="uil uil-bitcoin-circle"></i></span>
+                                <input type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="BTC" required>
+                            </div>
+                        </div>
+    
+                        <div class="col-span-12">
+                            <label for="comments" class="font-semibold">Description</label>
+                            <div class="relative mt-2">
+                                <textarea name="comments" id="comments" class="form-input w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+    
+                        <div class="col-span-12">
+                            <h6 class="font-semibold">Network Free</h6>
+    
+                            <div class="inline-block mt-2">
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" checked name="radio-colors" value="1">
+                                        <span class="text-slate-400">Regular</span>
+                                    </label>
+                                </div>
+                            </div>
+    
+                            <div class="inline-block mt-2 ms-2">
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" class="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2" name="radio-colors" value="1">
+                                        <span class="text-slate-400">Priority</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-end p-4 border-t border-gray-100 dark:border-gray-700">
+                <a routerLink="#" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">Continue</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed top-0 left-0 bottom-0 right-0 w-full h-screen bg-slate-900/25 flex items-center justify-center z-999" [ngClass]="isRequest === false ? 'hidden' : '' ">
+    <div id="" class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white inline-block">
+        <div class="relative h-auto md:w-[480px] w-300px">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="font-bold text-lg">Request Coin</h3>
+                <form method="dialog">
+                    <button class="size-6 flex justify-center items-center shadow dark:shadow-gray-800 rounded-md btn-ghost" (click)="onRequestClick()"><i data-feather="x" class="size-4"></i></button>
+                </form>
+            </div>
+            <div class="p-6">
+                <form action="">
+                    <div class="grid grid-cols-12 gap-3">
+                        <div class="col-span-12">
+                            <label class="font-semibold">Crypto Currency</label>
+                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <option selected>-- Currency --</option>
+                                <option value="BTC">BTC</option>
+                                <option value="ETH">ETH</option>
+                            </select>
+                        </div>
+
+                        <div class="col-span-12">
+                            <label class="font-semibold">Currency From</label>
+                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <option selected>-- My wallet --</option>
+                                <option value="BTC">BTC</option>
+                                <option value="ETH">ETH</option>
+                            </select>
+                        </div>
+
+                        <div class="col-span-12">
+                            <label class="form-label font-semibold">Address</label>
+                            <div class="relative mt-2">
+                                <a routerLink="" class="absolute top-0.5 end-0.5 size-9 text-xl bg-gray-100 dark:bg-slate-800 inline-flex justify-center items-center text-dark dark:text-white rounded" id="QUcode"><i class="uil uil-copy"></i></a>
+                                <input type="text" class="form-input pe-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" value="c12b001a15f9bd46ef1c6551386c" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-end p-4 border-t border-gray-100 dark:border-gray-700">
+                <a routerLink="#" class="py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center bg-emerald-600 hover:bg-emerald-700 border-emerald-600 hover:border-emerald-700 text-white rounded-md">Done</a>
+            </div>
+        </div>
+    </div>
+</div>

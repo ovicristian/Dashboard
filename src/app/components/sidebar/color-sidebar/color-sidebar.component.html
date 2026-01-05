@@ -1,0 +1,168 @@
+<nav id="sidebar" class="sidebar-wrapper sidebar-colored">
+    <div class="sidebar-content">
+        <div class="sidebar-brand">
+            <a routerLink="/"><img src="assets/images/logo-light.png" height="24" alt=""></a>
+        </div>
+        
+        <ul class="sidebar-menu border-t border-white/10" simplebar style="height: calc(100% - 70px);">
+            <li class="sidebar-dropdown" [ngClass]="['/', '/index-crypto','/index-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/index-item')"><i class="uil uil-chart-line me-2"></i>Dashboard</a>
+                <div class="sidebar-submenu" [ngClass]="['/', '/index-crypto','/index-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/' ? 'active ms-0' : ''"><a routerLink="/">Analytics</a></li>
+                        <li [ngClass]="activeManu === '/index-crypto' ? 'active ms-0' : ''"><a routerLink="/index-crypto">Cryptocurrency</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/index-dark','/index-rtl','/index-dark-rtl','/index-sidebar-light','/index-sidebar-colored','/layout-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/layout-item')"><i class="uil uil-browser me-2"></i>Layouts</a>
+                <div class="sidebar-submenu" [ngClass]="['/index-dark','/index-rtl','/index-dark-rtl','/index-sidebar-light','/index-sidebar-colored','/layout-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/index-dark' ? 'active ms-0' : ''"><a routerLink="/index-dark">Dark Dashboard</a></li>
+                        <li [ngClass]="activeManu === '/index-rtl' ? 'active ms-0' : ''"><a routerLink="/index-rtl">RTL Dashboard</a></li>
+                        <li [ngClass]="activeManu === '/index-dark-rtl' ? 'active ms-0' : ''"><a routerLink="/index-dark-rtl">Dark RTL Dashboard</a></li>
+                        <li [ngClass]="activeManu === '/index-sidebar-light' ? 'active ms-0' : ''"><a routerLink="/index-sidebar-light">Light Sidebar</a></li>
+                        <li [ngClass]="activeManu === '/index-sidebar-colored' ? 'active ms-0' : ''"><a routerLink="/index-sidebar-colored">Colored Sidebar</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/chat','/email','/calendar','/app-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/app-item')"><i class="uil uil-apps me-2"></i>Apps</a>
+                <div class="sidebar-submenu" [ngClass]="[ '/chat','/email','/calendar','/app-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/chat' ? 'active ms-0' : ''"><a routerLink="/chat">Chat</a></li>
+                        <li [ngClass]="activeManu === '/email' ? 'active ms-0' : ''"><a routerLink="/email">Email</a></li>
+                        <li [ngClass]="activeManu === '/calendar' ? 'active ms-0' : ''"><a routerLink="/calendar">Calendar</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/profile','/profile-billing','/profile-payment','profile-social', '/profile-notification', '/profile-setting', '/user-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/user-item')"><i class="uil uil-user me-2"></i>User Profile</a>
+                <div class="sidebar-submenu" [ngClass]="['/profile','/profile-billing','/profile-payment','profile-social', '/profile-notification', '/profile-setting', '/user-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/profile' ? 'active ms-0' : ''"><a routerLink="/profile">Profile</a></li>
+                        <li [ngClass]="activeManu === '/profile-billing' ? 'active ms-0' : ''"><a routerLink="/profile-billing">Billing Info</a></li>
+                        <li [ngClass]="activeManu === '/profile-payment' ? 'active ms-0' : ''"><a routerLink="/profile-payment">Payment</a></li>
+                        <li [ngClass]="activeManu === '/profile-social' ? 'active ms-0' : ''"><a routerLink="/profile-social">Social Profile</a></li>
+                        <li [ngClass]="activeManu === '/profile-notification' ? 'active ms-0' : ''"><a routerLink="/profile-notification">Notifications</a></li>
+                        <li [ngClass]="activeManu === '/profile-setting' ? 'active ms-0' : ''"><a routerLink="/profile-setting">Profile Settings</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/blog','/blog-detail', '/blog-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/blog-item')"><i class="uil uil-blogger me-2"></i>Blog</a>
+                <div class="sidebar-submenu" [ngClass]="['/blog','/blog-detail', '/blog-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/blog' ? 'active ms-0' : ''"><a routerLink="/blog">Blogs</a></li>
+                        <li [ngClass]="activeManu === '/blog-detail' ? 'active ms-0' : ''"><a routerLink="/blog-detail">Blog Detail</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/shop','/shop-item-detail', '/shop-cart', '/checkout', '/shop-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/shop-item')"><i class="uil uil-shopping-cart me-2"></i>E-Commerce</a>
+                <div class="sidebar-submenu" [ngClass]="[ '/shop','/shop-item-detail', '/shop-cart', '/checkout', '/shop-item'].includes(manuOpen) ? 'block ms-0' : '' " >
+                    <ul>
+                        <li [ngClass]="activeManu === '/shop' ? 'active ms-0' : ''"><a routerLink="/shop">Shop</a></li>
+                        <li [ngClass]="activeManu === '/shop-item-detail' ? 'active ms-0' : ''"><a routerLink="/shop-item-detail">Shop Detail</a></li>
+                        <li [ngClass]="activeManu === '/shop-cart' ? 'active ms-0' : ''"><a routerLink="/shop-cart">Shopcart</a></li>
+                        <li [ngClass]="activeManu === '/checkout' ? 'active ms-0' : ''"><a routerLink="/checkout">Checkout</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/gallery-one','/gallery-two', '/gallery-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/gallery-item')"><i class="uil uil-camera me-2"></i>Gallery</a>
+                <div class="sidebar-submenu" [ngClass]="['/gallery-one','/gallery-two', '/gallery-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/gallery-one' ? 'active ms-0' : ''"><a routerLink="/gallery-one">Gallary One</a></li>
+                        <li [ngClass]="activeManu === '/gallery-two' ? 'active ms-0' : ''"><a routerLink="/gallery-two">Gallery Two</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/starter','/faqs', '/pricing','/team','/privacy','/terms','/page-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/page-item')"><i class="uil uil-file me-2"></i>Pages</a>
+                <div class="sidebar-submenu" [ngClass]="['/starter','/faqs', '/pricing','/team','/privacy','/terms','/page-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/starter' ? 'active ms-0' : ''"><a routerLink="/starter">Starter</a></li>
+                        <li [ngClass]="activeManu === '/faqs' ? 'active ms-0' : ''"><a routerLink="/faqs">FAQs</a></li>
+                        <li [ngClass]="activeManu === '/pricing' ? 'active ms-0' : ''"><a routerLink="/pricing">Pricing</a></li>
+                        <li [ngClass]="activeManu === '/team' ? 'active ms-0' : ''"><a routerLink="/team">Team</a></li>
+                        <li [ngClass]="activeManu === '/privacy' ? 'active ms-0' : ''"><a routerLink="/privacy">Privacy Policy</a></li>
+                        <li [ngClass]="activeManu === '/terms' ? 'active ms-0' : ''"><a routerLink="/terms">Term & Condition</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li [ngClass]="activeManu === '/ui-components' ? 'active ms-0' : ''">
+                <a routerLink="/ui-components"><i class="uil uil-chart-line me-2"></i>UI Components</a>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/email-confirmation','/email-password-reset', '/email-invoices','/email-alert','/email-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/email-item')"><i class="uil uil-envelope me-2"></i>Email Template</a>
+                <div class="sidebar-submenu" [ngClass]="['/email-confirmation','/email-password-reset', '/email-invoices','/email-alert','/email-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/email-confirmation' ? 'active ms-0' : ''"><a routerLink="/email-confirmation">Confirmation</a></li>
+                        <li [ngClass]="activeManu === '/email-password-reset' ? 'active ms-0' : ''"><a routerLink="/email-password-reset">Reset Password</a></li>
+                        <li [ngClass]="activeManu === '/email-alert' ? 'active ms-0' : ''"><a routerLink="/email-alert">Alert</a></li>
+                        <li [ngClass]="activeManu === '/email-invoices' ? 'active ms-0' : ''"><a routerLink="/email-invoices">Invoice</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/invoice-list','/invoice', '/invoice-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/invoice-item')"><i class="uil uil-invoice me-2"></i>Invoice</a>
+                <div class="sidebar-submenu" [ngClass]="[ '/invoice-list','/invoice', '/invoice-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/invoice-list' ? 'active ms-0' : ''"><a routerLink="/invoice-list">Invoice List</a></li>
+                        <li [ngClass]="activeManu === '/invoice' ? 'active ms-0' : ''"><a routerLink="/invoice">Invoice Preview</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/auth-login','/auth-signup', '/auth-signup-success', 'auth-lock-screen', '/auth-re-password', '/auth-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/auth-item')"><i class="uil uil-sign-in-alt me-2"></i>Authentication</a>
+                <div class="sidebar-submenu" [ngClass]="[ '/auth-login','/auth-signup', '/auth-signup-success', 'auth-lock-screen', '/auth-re-password', '/auth-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/invoice-list' ? 'active ms-0' : ''"><a routerLink="/auth-login">Login</a></li>
+                        <li [ngClass]="activeManu === '/invoice-list' ? 'active ms-0' : ''"><a routerLink="/auth-signup">Signup</a></li>
+                        <li [ngClass]="activeManu === '/invoice-list' ? 'active ms-0' : ''"><a routerLink="/auth-signup-success">Signup Success</a></li>
+                        <li [ngClass]="activeManu === '/invoice-list' ? 'active ms-0' : ''"><a routerLink="/auth-re-password">Reset Password</a></li>
+                        <li [ngClass]="activeManu === '/invoice-list' ? 'active ms-0' : ''"><a routerLink="/auth-lock-screen">Lockscreen</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown" [ngClass]="[ '/comingsoon','/maintenance', '/error', '/thankyou', '/special-item'].includes(activeManu) ? 'active ms-0' : '' ">
+                <a routerLink="#" (click)="subManu('/special-item')"><i class="uil uil-layers me-2"></i>Miscellaneous</a>
+                <div class="sidebar-submenu"[ngClass]="[ '/comingsoon','/maintenance', '/error', '/thankyou', '/special-item'].includes(manuOpen) ? 'block ms-0' : '' ">
+                    <ul>
+                        <li [ngClass]="activeManu === '/comingsoon' ? 'active ms-0' : ''"><a routerLink="/comingsoon">Comingsoon</a></li>
+                        <li [ngClass]="activeManu === '/maintenance' ? 'active ms-0' : ''"><a routerLink="/maintenance">Maintenance</a></li>
+                        <li [ngClass]="activeManu === '/error' ? 'active ms-0' : ''"><a routerLink="/error">Error</a></li>
+                        <li [ngClass]="activeManu === '/thankyou' ? 'active ms-0' : ''"><a routerLink="/thankyou">Thank You</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="relative lg:m-8 m-6 px-8 py-10 rounded-lg bg-gradient-to-b to-transparent from-slate-800 text-center">
+                <span class="relative z-10">
+                    <span class="text-xl font-bold h5 text-white">Upgrade to Pro</span>
+
+                    <span class="text-slate-400 mt-3 mb-5 block">Get one month free and subscribe to pro</span>
+
+                    <a href="https://1.envato.market/techwind-angular" target="_blank" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle transition duration-500 ease-in-out text-base text-center bg-gray-500/5 hover:bg-gray-500 border-gray-500/10 hover:border-gray-500 text-white rounded-md">Subscribe</a>
+                </span>
+    
+                <img src="assets/images/shree-276.png" class="absolute top-1/2 -translate-y-1/2 start-0 end-0 mx-auto text-center h-40 w-40 z-0 opacity-5" alt="">
+            </li>
+        </ul>
+        <!-- sidebar-menu  -->
+    </div>
+</nav>
+
