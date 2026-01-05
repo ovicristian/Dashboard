@@ -39,7 +39,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/dashboard/",
+              "baseHref": "/",
               "budgets": [
                 {
                   "type": "initial",
