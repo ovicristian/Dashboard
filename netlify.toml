@@ -7,14 +7,6 @@
   NODE_VERSION = "18.17.0"
   NG_CLI_ANALYTICS = "false"
 
-# Production context
-[context.production.environment]
-  NODE_ENV = "production"
-
-# Deploy Preview context  
-[context.deploy-preview.environment]
-  NODE_ENV = "development"
-
 # Redirects - SPA fallback
 [[redirects]]
   from = "/*"
