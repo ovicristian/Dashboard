@@ -1,32 +1,21 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { SupabaseService } from '../services/supabase.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router, 
+    private supabaseService: SupabaseService
+  ) {}
 
-  canActivate(): Observable<boolean> | boolean {
-    const token = this.authService.getToken();
-    
-    if (!token) {
-      this.router.navigate(['/login']);
-      return false;
+  canActivate(): boolean {
+    if (this.supabaseService.isAuthenticated) {
+      return true;
     }
-
-    // If we have a token, validate it with the server
-    return this.authService.getMe().pipe(
-      map(() => {
-        return true;
-      }),
-      catchError(() => {
-        // Token is invalid, logout and redirect
-        this.authService.logout();
-        this.router.navigate(['/login']);
-        return of(false);
-      })
-    );
+    
+    // Not authenticated, redirect to login
+    this.router.navigate(['/auth-login']);
+    return false;
   }
 }
