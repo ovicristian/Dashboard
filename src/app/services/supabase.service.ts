@@ -123,7 +123,9 @@ export class SupabaseService {
       .from('providers')
       .select(`
         *,
-        service:services(id, name)
+        provider_services(
+          service:services(id, name)
+        )
       `)
       .order('created_at', { ascending: false });
     return { data, error };
@@ -134,7 +136,9 @@ export class SupabaseService {
       .from('providers')
       .select(`
         *,
-        service:services(id, name)
+        provider_services(
+          service:services(id, name)
+        )
       `)
       .eq('id', id)
       .single();
@@ -143,11 +147,15 @@ export class SupabaseService {
 
   async getProvidersByService(serviceId: string) {
     const { data, error } = await this.supabase
-      .from('providers')
-      .select('*')
-      .eq('service_id', serviceId)
-      .order('name', { ascending: true });
-    return { data, error };
+      .from('provider_services')
+      .select(`
+        provider:providers(*)
+      `)
+      .eq('service_id', serviceId);
+    
+    // Transform data to return just the providers
+    const providers = data?.map((item: any) => item.provider) || [];
+    return { data: providers, error };
   }
 
   async createProvider(provider: any) {
@@ -175,6 +183,39 @@ export class SupabaseService {
       .delete()
       .eq('id', id);
     return { error };
+  }
+
+  // Provider Services Management
+  async getProviderServices(providerId: string) {
+    const { data, error } = await this.supabase
+      .from('provider_services')
+      .select('service_id')
+      .eq('provider_id', providerId);
+    return { data, error };
+  }
+
+  async setProviderServices(providerId: string, serviceIds: string[]) {
+    // First, delete existing services
+    await this.supabase
+      .from('provider_services')
+      .delete()
+      .eq('provider_id', providerId);
+
+    // Then, insert new services
+    if (serviceIds.length > 0) {
+      const records = serviceIds.map(serviceId => ({
+        provider_id: providerId,
+        service_id: serviceId
+      }));
+
+      const { data, error } = await this.supabase
+        .from('provider_services')
+        .insert(records)
+        .select();
+      return { data, error };
+    }
+
+    return { data: [], error: null };
   }
 
   // Users/Admins CRUD

@@ -33,7 +33,7 @@ export class ProvidersComponent implements OnInit {
   
   // Edit modal
   showEditModal: boolean = false;
-  editingProvider: any = { id: '', name: '', description: '', email: '', phone: '', rating: 0, service_id: '' };
+  editingProvider: any = { id: '', name: '', description: '', email: '', phone: '', rating: 0, serviceIds: [] };
   successMessage: string = '';
   errorMessage: string = '';
   saving: boolean = false;
@@ -103,7 +103,7 @@ export class ProvidersComponent implements OnInit {
   }
 
   editProvider(provider: Provider) {
-    // Load full provider data including service_id
+    // Load full provider data including serviceIds
     this.providersService.getProviderById(provider.id).subscribe({
       next: (fullProvider) => {
         this.editingProvider = {
@@ -113,7 +113,7 @@ export class ProvidersComponent implements OnInit {
           email: fullProvider.email || '',
           phone: fullProvider.phone || '',
           rating: fullProvider.rating || 0,
-          service_id: fullProvider.service_id || ''
+          serviceIds: fullProvider.serviceIds || []
         };
         this.showEditModal = true;
         this.successMessage = '';
@@ -128,11 +128,24 @@ export class ProvidersComponent implements OnInit {
 
   closeEditModal() {
     this.showEditModal = false;
-    this.editingProvider = { id: '', name: '', description: '', email: '', phone: '', rating: 0, service_id: '' };
+    this.editingProvider = { id: '', name: '', description: '', email: '', phone: '', rating: 0, serviceIds: [] };
     this.successMessage = '';
     this.errorMessage = '';
   }
+  isServiceSelected(serviceId: string): boolean {
+    return this.editingProvider.serviceIds.includes(serviceId);
+  }
 
+  toggleService(serviceId: string) {
+    const index = this.editingProvider.serviceIds.indexOf(serviceId);
+    if (index > -1) {
+      // Remove service
+      this.editingProvider.serviceIds.splice(index, 1);
+    } else {
+      // Add service
+      this.editingProvider.serviceIds.push(serviceId);
+    }
+  }
   saveProvider() {
     this.saving = true;
     this.successMessage = '';

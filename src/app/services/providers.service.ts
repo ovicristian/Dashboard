@@ -14,13 +14,16 @@ export class ProvidersService {
     return from(this.supabaseService.getProviders()).pipe(
       map((response) => {
         const rawProviders = response.data || [];
-        // Map the data to transform service object to service name
-        const providers = rawProviders.map((provider: any) => ({
-          id: provider.id,
-          name: provider.name,
-          service: provider.service?.name || 'Sin servicio',
-          rating: provider.rating || 0
-        })) as Provider[];
+        // Map the data to transform services array
+        const providers = rawProviders.map((provider: any) => {
+          const services = provider.provider_services?.map((ps: any) => ps.service?.name).filter(Boolean) || [];
+          return {
+            id: provider.id,
+            name: provider.name,
+            service: services.length > 0 ? services.join(', ') : 'Sin servicios',
+            rating: provider.rating || 0
+          };
+        }) as Provider[];
         return { providers: providers, total: providers.length };
       })
     );
@@ -38,7 +41,13 @@ export class ProvidersService {
     return from(this.supabaseService.getProviderById(id)).pipe(
       map((response) => {
         if (response.data) {
-          return response.data;
+          const provider = response.data;
+          // Extract service IDs from provider_services
+          const serviceIds = provider.provider_services?.map((ps: any) => ps.service?.id).filter(Boolean) || [];
+          return {
+            ...provider,
+            serviceIds: serviceIds
+          };
         }
         throw new Error('Provider not found');
       })
@@ -48,13 +57,23 @@ export class ProvidersService {
   updateProvider(provider: {
     id: string;
     name?: string;
-    service_id?: string;
+    serviceIds?: string[];
     description?: string;
     email?: string;
     phone?: string;
     rating?: number;
   }): Observable<any> {
-    const { id, ...updates } = provider;
-    return from(this.supabaseService.updateProvider(id, updates));
+    const { id, serviceIds, ...updates } = provider;
+    
+    // Update provider basic info
+    return from(this.supabaseService.updateProvider(id, updates)).pipe(
+      map(async (response) => {
+        // Update services if provided
+        if (serviceIds !== undefined) {
+          await this.supabaseService.setProviderServices(id, serviceIds);
+        }
+        return response;
+      })
+    );
   }
 }
