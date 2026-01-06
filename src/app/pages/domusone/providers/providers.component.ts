@@ -126,11 +126,3 @@ export class ProvidersComponent implements OnInit {
     });
   }
 }
-
-  nextPage() {
-    if (this.page < this.totalPages) {
-      this.page++;
-      this.loadProviders();
-    }
-  }
-}
