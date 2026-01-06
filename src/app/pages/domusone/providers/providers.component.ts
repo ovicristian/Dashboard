@@ -6,7 +6,9 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProvidersService } from '../../../services/providers.service';
+import { ServicesService } from '../../../services/services.service';
 import { Provider } from '../../../models/provider.model';
+import { Service } from '../../../models/service.model';
 
 @Component({
   selector: 'app-checkout',
@@ -36,8 +38,13 @@ export class ProvidersComponent implements OnInit {
   errorMessage: string = '';
   saving: boolean = false;
   isDarkMode: boolean = false; // Default to light mode
+  services: Service[] = [];
+  loadingServices: boolean = false;
 
-  constructor(private providersService: ProvidersService) {} // <-- Inject your service here
+  constructor(
+    private providersService: ProvidersService,
+    private servicesService: ServicesService
+  ) {}
 
   toggleClass() {
     this.activeSidebar = !this.activeSidebar;
@@ -48,6 +55,21 @@ export class ProvidersComponent implements OnInit {
     this.isDarkMode = document.body.classList.contains('dark');
     // Or use your app's theme service if available
     this.loadProviders();
+    this.loadServices();
+  }
+
+  loadServices() {
+    this.loadingServices = true;
+    this.servicesService.getServices(1, 100).subscribe({
+      next: (data) => {
+        this.services = data.services;
+        this.loadingServices = false;
+      },
+      error: (err) => {
+        console.error('Error loading services:', err);
+        this.loadingServices = false;
+      }
+    });
   }
 
   loadProviders() {
@@ -81,18 +103,27 @@ export class ProvidersComponent implements OnInit {
   }
 
   editProvider(provider: Provider) {
-    this.editingProvider = {
-      id: provider.id,
-      name: provider.name,
-      description: '',
-      email: '',
-      phone: '',
-      rating: provider.rating,
-      service_id: ''
-    };
-    this.showEditModal = true;
-    this.successMessage = '';
-    this.errorMessage = '';
+    // Load full provider data including service_id
+    this.providersService.getProviderById(provider.id).subscribe({
+      next: (fullProvider) => {
+        this.editingProvider = {
+          id: fullProvider.id,
+          name: fullProvider.name,
+          description: fullProvider.description || '',
+          email: fullProvider.email || '',
+          phone: fullProvider.phone || '',
+          rating: fullProvider.rating || 0,
+          service_id: fullProvider.service_id || ''
+        };
+        this.showEditModal = true;
+        this.successMessage = '';
+        this.errorMessage = '';
+      },
+      error: (err) => {
+        console.error('Error loading provider details:', err);
+        this.errorMessage = 'Error al cargar detalles del proveedor';
+      }
+    });
   }
 
   closeEditModal() {

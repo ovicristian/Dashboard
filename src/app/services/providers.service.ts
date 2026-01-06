@@ -13,7 +13,14 @@ export class ProvidersService {
   ): Observable<{ providers: Provider[]; total: number }> {
     return from(this.supabaseService.getProviders()).pipe(
       map((response) => {
-        const providers = (response.data || []) as Provider[];
+        const rawProviders = response.data || [];
+        // Map the data to transform service object to service name
+        const providers = rawProviders.map((provider: any) => ({
+          id: provider.id,
+          name: provider.name,
+          service: provider.service?.name || 'Sin servicio',
+          rating: provider.rating || 0
+        })) as Provider[];
         return { providers: providers, total: providers.length };
       })
     );
@@ -25,6 +32,17 @@ export class ProvidersService {
 
   deleteProvider(id: string): Observable<any> {
     return from(this.supabaseService.deleteProvider(id));
+  }
+
+  getProviderById(id: string): Observable<any> {
+    return from(this.supabaseService.getProviderById(id)).pipe(
+      map((response) => {
+        if (response.data) {
+          return response.data;
+        }
+        throw new Error('Provider not found');
+      })
+    );
   }
 
   updateProvider(provider: {
