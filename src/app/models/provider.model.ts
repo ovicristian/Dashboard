@@ -1,5 +1,5 @@
 export interface Provider {
-  id: number;
+  id: string;  // UUID from Supabase
   name: string;
   service: string;
   rating: number;

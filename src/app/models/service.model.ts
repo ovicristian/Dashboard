@@ -1,5 +1,5 @@
 export interface Service {
-  id: number;
+  id: string;  // UUID from Supabase
   name: string;
   description: string;
 }
