@@ -71,6 +71,14 @@ export class ProvidersComponent implements OnInit {
       this.page--;
       this.loadProviders();
     }
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.page++;
+      this.loadProviders();
+    }
+  }
 
   editProvider(provider: Provider) {
     this.editingProvider = {
@@ -117,7 +125,7 @@ export class ProvidersComponent implements OnInit {
       }
     });
   }
-  }
+}
 
   nextPage() {
     if (this.page < this.totalPages) {
