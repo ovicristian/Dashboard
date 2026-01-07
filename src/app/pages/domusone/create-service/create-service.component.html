@@ -28,8 +28,24 @@
                     name="name"
                     class="form-input w-full py-2 px-3 h-10 bg-gray-50 dark:bg-slate-800 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                     [(ngModel)]="service.name"
+                    (blur)="generateSlug()"
                     required
                   />
+                </div>
+                <div class="mb-4">
+                  <label for="slug" class="form-label font-semibold"
+                    >Slug (URL amigable)</label
+                  >
+                  <input
+                    type="text"
+                    id="slug"
+                    name="slug"
+                    class="form-input w-full py-2 px-3 h-10 bg-gray-50 dark:bg-slate-800 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                    [(ngModel)]="service.slug"
+                    required
+                    placeholder="ej: plomeria, electricidad"
+                  />
+                  <small class="text-gray-500">Se genera automáticamente del nombre</small>
                 </div>
                 <div class="mb-4">
                   <label for="description" class="form-label font-semibold"

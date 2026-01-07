@@ -34,14 +34,21 @@ export class CreateProviderComponent {
   createProvider() {
     this.error = '';
     this.success = '';
-    this.providersService.createProvider(this.provider).subscribe({
+    
+    // Create provider data, remove service_id if empty
+    const providerData = { ...this.provider };
+    if (!providerData.service_id) {
+      delete providerData.service_id;
+    }
+    
+    this.providersService.createProvider(providerData).subscribe({
       next: () => {
         this.success = 'Proveedor creado exitosamente.';
         this.provider = { name: '', service_id: '', description: '', email: '', phone: '', rating: 0 };
       },
       error: (err) => {
         console.error('Error details:', err);
-        this.error = 'Error al crear el proveedor.';
+        this.error = 'Error al crear el proveedor. ' + (err.error?.message || '');
       },
     });
   }

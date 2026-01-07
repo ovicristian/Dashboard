@@ -19,7 +19,7 @@ export class ServicesService {
     );
   }
 
-  createService(service: { name: string; description: string }): Observable<any> {
+  createService(service: { name: string; description: string; slug: string }): Observable<any> {
     return from(this.supabaseService.createService(service));
   }
 
@@ -27,10 +27,14 @@ export class ServicesService {
     return from(this.supabaseService.deleteService(id));
   }
 
-  updateService(service: { id: string; name: string; description: string }): Observable<any> {
-    return from(this.supabaseService.updateService(service.id, {
+  updateService(service: { id: string; name: string; description: string; slug?: string }): Observable<any> {
+    const updates: any = {
       name: service.name,
       description: service.description
-    }));
+    };
+    if (service.slug) {
+      updates.slug = service.slug;
+    }
+    return from(this.supabaseService.updateService(service.id, updates));
   }
 }

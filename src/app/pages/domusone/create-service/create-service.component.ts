@@ -22,7 +22,7 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 })
 export class CreateServiceComponent {
   activeSidebar: boolean = true;
-  service = { name: '', description: '' };
+  service = { name: '', description: '', slug: '' };
   error = '';
   success = '';
 
@@ -31,17 +31,35 @@ export class CreateServiceComponent {
     private router: Router
   ) {}
 
+  // Generate slug from name
+  generateSlug() {
+    if (this.service.name) {
+      this.service.slug = this.service.name
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    }
+  }
+
   createService() {
     this.error = '';
     this.success = '';
+    
+    // Generate slug if not provided
+    if (!this.service.slug) {
+      this.generateSlug();
+    }
+    
     this.servicesService.createService(this.service).subscribe({
       next: () => {
         this.success = 'Servicio creado exitosamente.';
-        this.service = { name: '', description: '' };
+        this.service = { name: '', description: '', slug: '' };
       },
       error: (err) => {
         console.error('Error details:', err);
-        this.error = 'Error al crear el servicio.';
+        this.error = 'Error al crear el servicio. ' + (err.error?.message || '');
       },
     });
   }
