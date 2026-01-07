@@ -36,12 +36,10 @@ export class CreateProviderComponent {
     this.success = '';
     
     // Create provider data, remove service_id if empty
-    const providerData = { ...this.provider };
-    if (!providerData.service_id) {
-      delete providerData.service_id;
-    }
+    const { service_id, ...providerData } = this.provider;
+    const finalData = service_id ? { ...providerData, service_id } : providerData;
     
-    this.providersService.createProvider(providerData).subscribe({
+    this.providersService.createProvider(finalData as any).subscribe({
       next: () => {
         this.success = 'Proveedor creado exitosamente.';
         this.provider = { name: '', service_id: '', description: '', email: '', phone: '', rating: 0 };
