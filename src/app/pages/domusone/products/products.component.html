@@ -1,0 +1,509 @@
+<div class="page-wrapper" [ngClass]="{ toggled: activeSidebar }">
+  <!-- sidebar-wrapper -->
+  <app-dark-sidebar />
+  <!-- sidebar-wrapper  -->
+
+  <!-- Start Page Content -->
+  <main class="page-content bg-gray-50 dark:bg-slate-800">
+    <!-- Top Header -->
+    <app-top-header (toggleClass)="toggleClass()" />
+    <!-- Top Header -->
+
+    <div class="container-fluid relative px-3">
+      <!-- Page Header -->
+      <div class="layout-specing">
+        <div class="flex justify-between items-center">
+          <div>
+            <h5 class="text-2xl font-semibold dark:text-white">Productos</h5>
+            <p class="text-slate-600 dark:text-slate-400">Gestiona el catálogo de productos</p>
+          </div>
+          <button
+            (click)="openCreateModal()"
+            class="py-2 px-5 inline-block font-semibold tracking-wide align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">
+            <i class="fas fa-plus mr-2"></i>Nuevo Producto
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="mt-6 bg-white dark:bg-slate-900 rounded-md shadow p-4">
+          <div class="flex items-center gap-4">
+            <div class="flex-1">
+              <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">Filtrar por Categoría</label>
+              <select
+                [(ngModel)]="filterCategoryId"
+                (change)="filterByCategory()"
+                class="form-select w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                <option value="">Todas las categorías</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="mt-6">
+          <div class="bg-white dark:bg-slate-900 rounded-md shadow overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead class="bg-gray-50 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Imagen</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Producto</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Categoría</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Precio</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Stock</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
+                  <tr *ngFor="let product of products" class="hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <img
+                        [src]="product.image_url || 'assets/images/logo-icon-64.png'"
+                        [alt]="product.name"
+                        class="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-700">
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-sm font-medium text-gray-900 dark:text-white">{{ product.name }}</div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">{{ product.description }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="text-sm text-gray-900 dark:text-white">{{ getCategoryName(product.category_id!) }}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm">
+                        <div *ngIf="product.discount_price" class="text-gray-400 dark:text-gray-500 line-through">${{ product.price | number:'1.0-0' }}</div>
+                        <div class="font-semibold text-gray-900 dark:text-white">
+                          ${{ (product.discount_price || product.price) | number:'1.0-0' }}
+                        </div>
+                        <div *ngIf="getDiscountPercentage(product) > 0" class="text-xs text-green-600">
+                          -{{ getDiscountPercentage(product) }}%
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        [ngClass]="{
+                          'bg-green-100 text-green-800': product.stock > 10,
+                          'bg-yellow-100 text-yellow-800': product.stock > 0 && product.stock <= 10,
+                          'bg-red-100 text-red-800': product.stock === 0
+                        }"
+                        class="px-2 py-1 rounded-full text-xs font-semibold">
+                        {{ product.stock }} unidades
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        [ngClass]="product.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                        class="px-2 py-1 rounded-full text-xs font-semibold">
+                        {{ product.active ? 'Activo' : 'Inactivo' }}
+                      </span>
+                      <span *ngIf="product.featured" class="ml-2 bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-semibold">
+                        <i class="fas fa-star mr-1"></i>Destacado
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button
+                        (click)="editProduct(product)"
+                        class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 hover:bg-indigo-200 dark:bg-indigo-900 dark:text-indigo-300 dark:hover:bg-indigo-800 rounded-md mr-2 transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                        Editar
+                      </button>
+                      <button
+                        (click)="deleteProduct(product)"
+                        class="inline-flex items-center px-3 py-1 bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800 rounded-md transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="products.length === 0">
+                    <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                      No hay productos registrados
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-white dark:bg-slate-900 px-4 py-3 border-t border-gray-200 dark:border-slate-700">
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-700 dark:text-gray-300">
+                  Mostrando <span class="font-medium">{{ products.length }}</span> de <span class="font-medium">{{ total }}</span> productos
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    (click)="prevPage()"
+                    [disabled]="page === 1"
+                    class="px-3 py-1 border border-gray-300 dark:border-slate-700 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-slate-800 dark:text-white">
+                    Anterior
+                  </button>
+                  <span class="px-3 py-1 text-sm text-gray-700 dark:text-gray-300">
+                    Página {{ page }} de {{ totalPages }}
+                  </span>
+                  <button
+                    (click)="nextPage()"
+                    [disabled]="page >= totalPages"
+                    class="px-3 py-1 border border-gray-300 dark:border-slate-700 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-slate-800 dark:text-white">
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Create Product Modal -->
+<div *ngIf="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" (click)="closeCreateModal()">
+  <div class="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold dark:text-white">Crear Producto</h2>
+      <button (click)="closeCreateModal()" class="text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="createProduct()" #createForm="ngForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Left Column -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Nombre *</label>
+            <input
+              type="text"
+              [(ngModel)]="newProduct.name"
+              name="name"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Descripción</label>
+            <textarea
+              [(ngModel)]="newProduct.description"
+              name="description"
+              rows="3"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Categoría</label>
+            <select
+              [(ngModel)]="newProduct.category_id"
+              name="category_id"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+              <option value="">Sin categoría</option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">SKU</label>
+            <input
+              type="text"
+              [(ngModel)]="newProduct.sku"
+              name="sku"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Imagen del Producto</label>
+            <div class="flex items-center gap-4">
+              <div class="flex-shrink-0">
+                <img
+                  [src]="imagePreview || 'assets/images/logo-icon-64.png'"
+                  alt="Preview"
+                  class="w-20 h-20 rounded-lg object-cover border-2 border-gray-300 dark:border-slate-600">
+              </div>
+              <div class="flex-1">
+                <input
+                  type="file"
+                  #fileInput
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  class="hidden">
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    (click)="fileInput.click()"
+                    class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm">
+                    <i class="fas fa-upload mr-1"></i>Subir
+                  </button>
+                  <button
+                    type="button"
+                    *ngIf="imagePreview"
+                    (click)="removeImage()"
+                    class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2 dark:text-gray-400">Max 2MB</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio *</label>
+              <input
+                type="number"
+                [(ngModel)]="newProduct.price"
+                name="price"
+                required
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio con Descuento</label>
+              <input
+                type="number"
+                [(ngModel)]="newProduct.discount_price"
+                name="discount_price"
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Stock</label>
+            <input
+              type="number"
+              [(ngModel)]="newProduct.stock"
+              name="stock"
+              min="0"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                [(ngModel)]="newProduct.active"
+                name="active"
+                class="mr-2">
+              <span class="text-sm dark:text-gray-300">Activo</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                [(ngModel)]="newProduct.featured"
+                name="featured"
+                class="mr-2">
+              <span class="text-sm dark:text-gray-300">Destacado</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-6">
+        <button
+          type="button"
+          (click)="closeCreateModal()"
+          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="!createForm.valid || creating || uploadingImage"
+          class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50">
+          <span *ngIf="uploadingImage"><i class="fas fa-spinner fa-spin mr-2"></i>Subiendo imagen...</span>
+          <span *ngIf="!uploadingImage">{{ creating ? 'Creando...' : 'Crear Producto' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" (click)="closeEditModal()">
+  <div class="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold dark:text-white">Editar Producto</h2>
+      <button (click)="closeEditModal()" class="text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="saveProduct()" #editForm="ngForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Same structure as create modal but with editingProduct -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Nombre *</label>
+            <input
+              type="text"
+              [(ngModel)]="editingProduct.name"
+              name="name"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Descripción</label>
+            <textarea
+              [(ngModel)]="editingProduct.description"
+              name="description"
+              rows="3"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Categoría</label>
+            <select
+              [(ngModel)]="editingProduct.category_id"
+              name="category_id"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+              <option value="">Sin categoría</option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">SKU</label>
+            <input
+              type="text"
+              [(ngModel)]="editingProduct.sku"
+              name="sku"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+        </div>
+
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Imagen del Producto</label>
+            <div class="flex items-center gap-4">
+              <div class="flex-shrink-0">
+                <img
+                  [src]="imagePreview || 'assets/images/logo-icon-64.png'"
+                  alt="Preview"
+                  class="w-20 h-20 rounded-lg object-cover border-2 border-gray-300 dark:border-slate-600">
+              </div>
+              <div class="flex-1">
+                <input
+                  type="file"
+                  #fileInput2
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  class="hidden">
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    (click)="fileInput2.click()"
+                    class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm">
+                    <i class="fas fa-upload mr-1"></i>Subir
+                  </button>
+                  <button
+                    type="button"
+                    *ngIf="imagePreview"
+                    (click)="removeImage()"
+                    class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2 dark:text-gray-400">Max 2MB</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio *</label>
+              <input
+                type="number"
+                [(ngModel)]="editingProduct.price"
+                name="price"
+                required
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio con Descuento</label>
+              <input
+                type="number"
+                [(ngModel)]="editingProduct.discount_price"
+                name="discount_price"
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Stock</label>
+            <input
+              type="number"
+              [(ngModel)]="editingProduct.stock"
+              name="stock"
+              min="0"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                [(ngModel)]="editingProduct.active"
+                name="active"
+                class="mr-2">
+              <span class="text-sm dark:text-gray-300">Activo</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                [(ngModel)]="editingProduct.featured"
+                name="featured"
+                class="mr-2">
+              <span class="text-sm dark:text-gray-300">Destacado</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-6">
+        <button
+          type="button"
+          (click)="closeEditModal()"
+          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="!editForm.valid || saving || uploadingImage"
+          class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50">
+          <span *ngIf="uploadingImage"><i class="fas fa-spinner fa-spin mr-2"></i>Subiendo imagen...</span>
+          <span *ngIf="!uploadingImage">{{ saving ? 'Guardando...' : 'Guardar Cambios' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,350 @@
+<div class="page-wrapper" [ngClass]="{ toggled: activeSidebar }">
+  <!-- sidebar-wrapper -->
+  <app-dark-sidebar />
+  <!-- sidebar-wrapper  -->
+
+  <!-- Start Page Content -->
+  <main class="page-content bg-gray-50 dark:bg-slate-800">
+    <!-- Top Header -->
+    <app-top-header (toggleClass)="toggleClass()" />
+    <!-- Top Header -->
+
+    <div class="container-fluid relative px-3">
+      <!-- Page Header -->
+      <div class="layout-specing">
+        <div class="flex justify-between items-center">
+          <div>
+            <h5 class="text-2xl font-semibold dark:text-white">Categorías de Productos</h5>
+            <p class="text-slate-600 dark:text-slate-400">Gestiona las categorías del catálogo</p>
+          </div>
+          <button
+            (click)="openCreateModal()"
+            class="py-2 px-5 inline-flex items-center font-semibold tracking-wide align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Nueva Categoría
+          </button>
+        </div>
+
+        <!-- Categories Table -->
+        <div class="mt-6">
+          <div class="bg-white dark:bg-slate-900 rounded-md shadow overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead class="bg-gray-50 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Icono</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nombre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Slug</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Descripción</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
+                  <tr *ngFor="let category of categories" class="hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div *ngIf="category.icon" class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
+                        <i [class]="category.icon + ' text-indigo-600 dark:text-indigo-400 text-lg'"></i>
+                      </div>
+                      <div *ngIf="!category.icon" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-sm font-medium text-gray-900 dark:text-white">{{ category.name }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <code class="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">{{ category.slug }}</code>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-xs">{{ category.description || '-' }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        [ngClass]="category.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                        class="px-2 py-1 rounded-full text-xs font-semibold">
+                        {{ category.active ? 'Activa' : 'Inactiva' }}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button
+                        (click)="editCategory(category)"
+                        class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 hover:bg-indigo-200 dark:bg-indigo-900 dark:text-indigo-300 dark:hover:bg-indigo-800 rounded-md mr-2 transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        Editar
+                      </button>
+                      <button
+                        (click)="openDeleteModal(category)"
+                        class="inline-flex items-center px-3 py-1 bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800 rounded-md transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr *ngIf="categories.length === 0">
+                    <td colspan="6" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                      No hay categorías creadas. Haz clic en "Nueva Categoría" para comenzar.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer />
+  </main>
+</div>
+
+<!-- Create Category Modal -->
+<div *ngIf="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center">
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Nueva Categoría</h3>
+      <button (click)="closeCreateModal()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4">
+      <!-- Success/Error Messages -->
+      <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Nombre <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="newCategory.name"
+          (blur)="generateSlug()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          placeholder="Ej: Electrónica">
+      </div>
+
+      <!-- Slug -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Slug <span class="text-red-500">*</span>
+          <button 
+            (click)="generateSlug()"
+            type="button"
+            class="ml-2 text-xs text-indigo-600 hover:text-indigo-700 dark:text-indigo-400">
+            Generar automáticamente
+          </button>
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="newCategory.slug"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          placeholder="ej: electronica">
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">URL amigable (solo letras minúsculas, números y guiones)</p>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descripción</label>
+        <textarea
+          [(ngModel)]="newCategory.description"
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          placeholder="Descripción de la categoría"></textarea>
+      </div>
+
+      <!-- Icon -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Icono (clase Font Awesome)</label>
+        <input
+          type="text"
+          [(ngModel)]="newCategory.icon"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          placeholder="ej: fas fa-laptop">
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Opcional. Clase de icono de Font Awesome</p>
+      </div>
+
+      <!-- Active -->
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          [(ngModel)]="newCategory.active"
+          id="new-category-active"
+          class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+        <label for="new-category-active" class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Categoría activa
+        </label>
+      </div>
+    </div>
+
+    <div class="px-6 py-4 border-t border-gray-200 dark:border-slate-700 flex justify-end gap-3">
+      <button
+        (click)="closeCreateModal()"
+        [disabled]="creating"
+        class="px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-50">
+        Cancelar
+      </button>
+      <button
+        (click)="createCategory()"
+        [disabled]="creating"
+        class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50">
+        <span *ngIf="!creating">Crear Categoría</span>
+        <span *ngIf="creating">Creando...</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center">
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Editar Categoría</h3>
+      <button (click)="closeEditModal()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4">
+      <!-- Success/Error Messages -->
+      <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Nombre <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="editingCategory.name"
+          (blur)="generateSlug()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+      </div>
+
+      <!-- Slug -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Slug <span class="text-red-500">*</span>
+          <button 
+            (click)="generateSlug()"
+            type="button"
+            class="ml-2 text-xs text-indigo-600 hover:text-indigo-700 dark:text-indigo-400">
+            Regenerar
+          </button>
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="editingCategory.slug"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descripción</label>
+        <textarea
+          [(ngModel)]="editingCategory.description"
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white"></textarea>
+      </div>
+
+      <!-- Icon -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Icono (clase Font Awesome)</label>
+        <input
+          type="text"
+          [(ngModel)]="editingCategory.icon"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+      </div>
+
+      <!-- Active -->
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          [(ngModel)]="editingCategory.active"
+          id="edit-category-active"
+          class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+        <label for="edit-category-active" class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Categoría activa
+        </label>
+      </div>
+    </div>
+
+    <div class="px-6 py-4 border-t border-gray-200 dark:border-slate-700 flex justify-end gap-3">
+      <button
+        (click)="closeEditModal()"
+        [disabled]="saving"
+        class="px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-50">
+        Cancelar
+      </button>
+      <button
+        (click)="updateCategory()"
+        [disabled]="saving"
+        class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50">
+        <span *ngIf="!saving">Guardar Cambios</span>
+        <span *ngIf="saving">Guardando...</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-md w-full">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-slate-700">
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmar Eliminación</h3>
+    </div>
+
+    <div class="p-6">
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ errorMessage }}
+      </div>
+
+      <p class="text-gray-700 dark:text-gray-300">
+        ¿Estás seguro de que deseas eliminar la categoría <strong>{{ categoryToDelete?.name }}</strong>?
+      </p>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+        Esta acción no se puede deshacer y puede fallar si hay productos asociados a esta categoría.
+      </p>
+    </div>
+
+    <div class="px-6 py-4 border-t border-gray-200 dark:border-slate-700 flex justify-end gap-3">
+      <button
+        (click)="closeDeleteModal()"
+        [disabled]="deleting"
+        class="px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-50">
+        Cancelar
+      </button>
+      <button
+        (click)="deleteCategory()"
+        [disabled]="deleting"
+        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md disabled:opacity-50">
+        <span *ngIf="!deleting">Eliminar</span>
+        <span *ngIf="deleting">Eliminando...</span>
+      </button>
+    </div>
+  </div>
+</div>

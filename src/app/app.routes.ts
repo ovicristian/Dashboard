@@ -13,6 +13,9 @@ import { ProvidersComponent } from './pages/domusone/providers/providers.compone
 import { CreateProviderComponent } from './pages/domusone/create-provider/create-provider.component';
 import { DropProviderComponent } from './pages/domusone/drop-provider/drop-provider.component';
 import { UpdateProviderComponent } from './pages/domusone/update-provider/update-provider.component';
+import { ProductsComponent } from './pages/domusone/products/products.component';
+import { OrdersComponent } from './pages/domusone/orders/orders.component';
+import { ProductCategoriesComponent } from './pages/domusone/product-categories/product-categories.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/services', pathMatch: 'full' },
@@ -51,6 +54,21 @@ export const routes: Routes = [
   {
     path: 'update-provider',
     component: UpdateProviderComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'product-categories',
+    component: ProductCategoriesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/auth-login' }

@@ -33,13 +33,21 @@ export class ProvidersComponent implements OnInit {
   
   // Edit modal
   showEditModal: boolean = false;
-  editingProvider: any = { id: '', name: '', description: '', email: '', phone: '', rating: 0, serviceIds: [] };
+  editingProvider: any = { id: '', name: '', description: '', email: '', phone: '', rating: 0, hourly_rate: null, logo_url: '', serviceIds: [] };
   successMessage: string = '';
   errorMessage: string = '';
   saving: boolean = false;
   isDarkMode: boolean = false; // Default to light mode
   services: Service[] = [];
   loadingServices: boolean = false;
+  selectedFile: File | null = null;
+  uploadingLogo: boolean = false;
+  logoPreview: string | null = null;
+
+  // Create modal
+  showCreateModal: boolean = false;
+  newProvider: any = { name: '', description: '', email: '', phone: '', rating: 4.5, hourly_rate: null, logo_url: '', serviceIds: [] };
+  creating: boolean = false;
 
   constructor(
     private providersService: ProvidersService,
@@ -113,8 +121,11 @@ export class ProvidersComponent implements OnInit {
           email: fullProvider.email || '',
           phone: fullProvider.phone || '',
           rating: fullProvider.rating || 0,
+          hourly_rate: fullProvider.hourly_rate || null,
+          logo_url: fullProvider.logo_url || '',
           serviceIds: fullProvider.serviceIds || []
         };
+        this.logoPreview = fullProvider.logo_url || null;
         this.showEditModal = true;
         this.successMessage = '';
         this.errorMessage = '';
@@ -128,10 +139,13 @@ export class ProvidersComponent implements OnInit {
 
   closeEditModal() {
     this.showEditModal = false;
-    this.editingProvider = { id: '', name: '', description: '', email: '', phone: '', rating: 0, serviceIds: [] };
+    this.editingProvider = { id: '', name: '', description: '', email: '', phone: '', rating: 0, hourly_rate: null, logo_url: '', serviceIds: [] };
     this.successMessage = '';
     this.errorMessage = '';
+    this.selectedFile = null;
+    this.logoPreview = null;
   }
+
   isServiceSelected(serviceId: string): boolean {
     return this.editingProvider.serviceIds.includes(serviceId);
   }
@@ -146,27 +160,198 @@ export class ProvidersComponent implements OnInit {
       this.editingProvider.serviceIds.push(serviceId);
     }
   }
-  saveProvider() {
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.errorMessage = 'Por favor selecciona una imagen válida';
+        return;
+      }
+      
+      // Validate file size (max 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        this.errorMessage = 'La imagen no debe superar 2MB';
+        return;
+      }
+
+      this.selectedFile = file;
+      
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.logoPreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeLogo() {
+    this.selectedFile = null;
+    this.logoPreview = null;
+    if (this.showEditModal) {
+      this.editingProvider.logo_url = '';
+    } else if (this.showCreateModal) {
+      this.newProvider.logo_url = '';
+    }
+  }
+
+  openCreateModal() {
+    this.showCreateModal = true;
+    this.newProvider = { name: '', description: '', email: '', phone: '', rating: 4.5, hourly_rate: null, logo_url: '', serviceIds: [] };
+    this.selectedFile = null;
+    this.logoPreview = null;
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
+
+  closeCreateModal() {
+    this.showCreateModal = false;
+    this.newProvider = { name: '', description: '', email: '', phone: '', rating: 4.5, hourly_rate: null, logo_url: '', serviceIds: [] };
+    this.selectedFile = null;
+    this.logoPreview = null;
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
+
+  isServiceSelectedCreate(serviceId: string): boolean {
+    return this.newProvider.serviceIds.includes(serviceId);
+  }
+
+  toggleServiceCreate(serviceId: string) {
+    const index = this.newProvider.serviceIds.indexOf(serviceId);
+    if (index > -1) {
+      this.newProvider.serviceIds.splice(index, 1);
+    } else {
+      this.newProvider.serviceIds.push(serviceId);
+    }
+  }
+
+  async createProvider() {
+    this.creating = true;
+    this.successMessage = '';
+    this.errorMessage = '';
+
+    try {
+      // First create the provider without logo
+      const providerData = {
+        name: this.newProvider.name,
+        description: this.newProvider.description || null,
+        email: this.newProvider.email || null,
+        phone: this.newProvider.phone || null,
+        rating: this.newProvider.rating || 4.5,
+        hourly_rate: this.newProvider.hourly_rate || null
+      };
+
+      this.providersService.createProvider(providerData).subscribe({
+        next: async (response) => {
+          const createdProvider = response.data;
+          
+          // Upload logo if selected
+          if (this.selectedFile && createdProvider) {
+            try {
+              this.uploadingLogo = true;
+              const logoUrl = await this.providersService.uploadProviderLogo(
+                this.selectedFile,
+                createdProvider.id
+              );
+              
+              // Update provider with logo URL
+              await this.providersService.updateProvider({
+                id: createdProvider.id,
+                logo_url: logoUrl,
+                serviceIds: this.newProvider.serviceIds
+              }).toPromise();
+              
+              this.uploadingLogo = false;
+            } catch (logoError: any) {
+              console.error('Error uploading logo:', logoError);
+              this.errorMessage = `Proveedor creado pero error al subir logo: ${logoError.message || 'Error desconocido'}`;
+              this.uploadingLogo = false;
+            }
+          } else if (this.newProvider.serviceIds.length > 0) {
+            // Just set services if no logo
+            await this.providersService.updateProvider({
+              id: createdProvider.id,
+              serviceIds: this.newProvider.serviceIds
+            }).toPromise();
+          }
+
+          if (!this.errorMessage) {
+            this.successMessage = 'Proveedor creado exitosamente';
+          }
+          this.creating = false;
+          this.loadProviders();
+          
+          setTimeout(() => {
+            this.closeCreateModal();
+          }, 1500);
+        },
+        error: (err) => {
+          console.error('Error creating provider:', err);
+          this.errorMessage = 'Error al crear el proveedor';
+          this.creating = false;
+          this.uploadingLogo = false;
+        }
+      });
+    } catch (err) {
+      console.error('Error in create process:', err);
+      this.errorMessage = 'Error al crear el proveedor';
+      this.creating = false;
+      this.uploadingLogo = false;
+    }
+  }
+
+  async saveProvider() {
     this.saving = true;
     this.successMessage = '';
     this.errorMessage = '';
 
-    this.providersService.updateProvider(this.editingProvider).subscribe({
-      next: () => {
-        this.successMessage = 'Proveedor actualizado exitosamente';
-        this.saving = false;
-        // Reload providers
-        this.loadProviders();
-        // Close modal after 1.5 seconds
-        setTimeout(() => {
-          this.closeEditModal();
-        }, 1500);
-      },
-      error: (err) => {
-        console.error('Error updating provider:', err);
-        this.errorMessage = 'Error al actualizar el proveedor';
-        this.saving = false;
+    try {
+      // Upload logo if a new file was selected
+      if (this.selectedFile) {
+        this.uploadingLogo = true;
+        try {
+          const logoUrl = await this.providersService.uploadProviderLogo(
+            this.selectedFile,
+            this.editingProvider.id
+          );
+          this.editingProvider.logo_url = logoUrl;
+          this.uploadingLogo = false;
+        } catch (logoError: any) {
+          console.error('Error uploading logo:', logoError);
+          this.errorMessage = `Error al subir el logo: ${logoError.message || 'Error desconocido'}`;
+          this.uploadingLogo = false;
+          this.saving = false;
+          return;
+        }
       }
-    });
+
+      // Update provider
+      this.providersService.updateProvider(this.editingProvider).subscribe({
+        next: () => {
+          this.successMessage = 'Proveedor actualizado exitosamente';
+          this.saving = false;
+          // Reload providers
+          this.loadProviders();
+          // Close modal after 1.5 seconds
+          setTimeout(() => {
+            this.closeEditModal();
+          }, 1500);
+        },
+        error: (err) => {
+          console.error('Error updating provider:', err);
+          this.errorMessage = `Error al actualizar el proveedor: ${err.message || 'Error desconocido'}`;
+          this.saving = false;
+          this.uploadingLogo = false;
+        }
+      });
+    } catch (err: any) {
+      console.error('Error uploading logo:', err);
+      this.errorMessage = `Error al subir el logo: ${err.message || 'Error desconocido'}`;
+      this.saving = false;
+      this.uploadingLogo = false;
+    }
   }
 }

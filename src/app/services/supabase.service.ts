@@ -289,6 +289,262 @@ export class SupabaseService {
       .subscribe();
   }
 
+  // ============================================
+  // PRODUCTS & CATEGORIES
+  // ============================================
+  
+  async getProducts(categoryId?: string) {
+    let query = this.supabase
+      .from('products')
+      .select(`
+        *,
+        category:product_categories(id, name, slug)
+      `)
+      .order('created_at', { ascending: false });
+    
+    if (categoryId) {
+      query = query.eq('category_id', categoryId);
+    }
+    
+    const { data, error } = await query;
+    return { data, error };
+  }
+
+  async getProductById(id: string) {
+    const { data, error } = await this.supabase
+      .from('products')
+      .select(`
+        *,
+        category:product_categories(id, name, slug)
+      `)
+      .eq('id', id)
+      .single();
+    return { data, error };
+  }
+
+  async createProduct(product: any) {
+    const { data, error } = await this.supabase
+      .from('products')
+      .insert(product)
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  async updateProduct(id: string, updates: any) {
+    const { data, error } = await this.supabase
+      .from('products')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  async deleteProduct(id: string) {
+    const { error } = await this.supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+    return { error };
+  }
+
+  async getProductCategories() {
+    const { data, error } = await this.supabase
+      .from('product_categories')
+      .select('*')
+      .order('name', { ascending: true });
+    return { data, error };
+  }
+
+  async createProductCategory(category: any) {
+    const { data, error } = await this.supabase
+      .from('product_categories')
+      .insert(category)
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  async updateProductCategory(id: string, updates: any) {
+    const { data, error } = await this.supabase
+      .from('product_categories')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  async deleteProductCategory(id: string) {
+    const { error } = await this.supabase
+      .from('product_categories')
+      .delete()
+      .eq('id', id);
+    return { error };
+  }
+
+  // ============================================
+  // ORDERS
+  // ============================================
+  
+  async getOrders(status?: string) {
+    let query = this.supabase
+      .from('orders')
+      .select(`
+        *,
+        items:order_items(
+          *
+        )
+      `)
+      .order('created_at', { ascending: false });
+    
+    if (status) {
+      query = query.eq('order_status', status);
+    }
+    
+    const { data, error } = await query;
+    return { data, error };
+  }
+
+  async getOrderById(id: string) {
+    const { data, error } = await this.supabase
+      .from('orders')
+      .select(`
+        *,
+        items:order_items(
+          *
+        )
+      `)
+      .eq('id', id)
+      .single();
+    return { data, error };
+  }
+
+  async getOrderByNumber(orderNumber: string) {
+    const { data, error } = await this.supabase
+      .from('orders')
+      .select(`
+        *,
+        items:order_items(
+          *
+        )
+      `)
+      .eq('order_number', orderNumber)
+      .single();
+    return { data, error };
+  }
+
+  async createOrder(orderData: any) {
+    // First create the order
+    const { items, ...orderInfo } = orderData;
+    
+    // Calculate totals
+    let subtotal = 0;
+    const enrichedItems = [];
+    
+    for (const item of items) {
+      const { data: product } = await this.supabase
+        .from('products')
+        .select('*')
+        .eq('id', item.product_id)
+        .single();
+      
+      if (product) {
+        const itemSubtotal = product.price * item.quantity;
+        subtotal += itemSubtotal;
+        
+        enrichedItems.push({
+          product_id: item.product_id,
+          product_name: product.name,
+          product_price: product.price,
+          product_image_url: product.image_url,
+          quantity: item.quantity,
+          subtotal: itemSubtotal
+        });
+      }
+    }
+    
+    const total = subtotal + (orderInfo.delivery_fee || 0);
+    
+    const { data: order, error: orderError } = await this.supabase
+      .from('orders')
+      .insert({
+        ...orderInfo,
+        subtotal,
+        total,
+        payment_method: 'cash_on_delivery',
+        order_status: 'pending'
+      })
+      .select()
+      .single();
+    
+    if (orderError) {
+      return { data: null, error: orderError };
+    }
+    
+    // Then create order items
+    const itemsWithOrderId = enrichedItems.map(item => ({
+      ...item,
+      order_id: order.id
+    }));
+    
+    const { error: itemsError } = await this.supabase
+      .from('order_items')
+      .insert(itemsWithOrderId);
+    
+    if (itemsError) {
+      return { data: null, error: itemsError };
+    }
+    
+    // Add status history
+    await this.supabase
+      .from('order_status_history')
+      .insert({
+        order_id: order.id,
+        status: 'pending',
+        notes: 'Pedido creado'
+      });
+    
+    return { data: order, error: null };
+  }
+
+  async updateOrderStatus(id: string, status: string, notes?: string) {
+    const { data, error } = await this.supabase
+      .from('orders')
+      .update({ order_status: status })
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (!error && notes) {
+      // Add to history
+      await this.supabase
+        .from('order_status_history')
+        .insert({
+          order_id: id,
+          status,
+          notes
+        });
+    }
+    
+    return { data, error };
+  }
+
+  async deleteOrder(id: string) {
+    const { error } = await this.supabase
+      .from('orders')
+      .delete()
+      .eq('id', id);
+    return { error };
+  }
+
+  async getOrderStats() {
+    const { data, error } = await this.supabase
+      .rpc('get_order_stats');
+    return { data, error };
+  }
+
   // Utility
   get isAuthenticated(): boolean {
     return this.currentUserSubject.value !== null;

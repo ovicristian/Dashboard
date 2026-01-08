@@ -1,4 +1,4 @@
-import {  Component, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, Input } from '@angular/core';
 import SimpleBar from 'simplebar';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,8 @@ import * as feather from 'feather-icons';
 
 })
 export class DarkSidebarComponent implements AfterViewInit {
+  @Input() activeSidebar: boolean = true;
+  
   constructor(private el: ElementRef, private router : Router) {}
 
   ngAfterViewInit() {

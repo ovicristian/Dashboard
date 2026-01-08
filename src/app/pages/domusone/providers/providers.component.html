@@ -11,9 +11,18 @@
 
     <div class="container-fluid relative px-3">
       <div class="layout-specing">
-        <h1 style="font-weight: bold; margin-bottom: 24px">
-          Proveedores disponibles
-        </h1>
+        <div class="flex justify-between items-center mb-6">
+          <h1 style="font-weight: bold; margin: 0">
+            Proveedores disponibles
+          </h1>
+          <button
+            (click)="openCreateModal()"
+            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors flex items-center gap-2"
+          >
+            <i class="fas fa-plus"></i>
+            Crear Proveedor
+          </button>
+        </div>
         <hr />
         <div class="card rounded-md shadow border-0 mt-4">
           <div class="card-body p-0">
@@ -107,8 +116,8 @@
 </div>
 
 <!-- Edit Provider Modal -->
-<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="closeEditModal()">
-  <div class="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-md" (click)="$event.stopPropagation()">
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" (click)="closeEditModal()">
+  <div class="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-5xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold dark:text-white">Editar Proveedor</h2>
       <button (click)="closeEditModal()" class="text-gray-500 hover:text-gray-700">
@@ -125,29 +134,126 @@
     </div>
 
     <form (ngSubmit)="saveProvider()" #editForm="ngForm">
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-2 dark:text-gray-300">Nombre</label>
-        <input 
-          type="text" 
-          [(ngModel)]="editingProvider.name" 
-          name="name"
-          required
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+      <!-- Two Column Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Left Column -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Nombre</label>
+            <input 
+              type="text" 
+              [(ngModel)]="editingProvider.name" 
+              name="name"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Descripción</label>
+            <textarea 
+              [(ngModel)]="editingProvider.description" 
+              name="description"
+              rows="3"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Email</label>
+            <input 
+              type="email" 
+              [(ngModel)]="editingProvider.email" 
+              name="email"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Teléfono</label>
+            <input 
+              type="text" 
+              [(ngModel)]="editingProvider.phone" 
+              name="phone"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Logo del Proveedor</label>
+            <div class="flex items-center gap-4">
+              <!-- Preview -->
+              <div class="flex-shrink-0">
+                <img 
+                  [src]="logoPreview || 'assets/images/logo-icon-64.png'" 
+                  alt="Logo preview"
+                  class="w-20 h-20 rounded-lg object-cover border-2 border-gray-300 dark:border-slate-600">
+              </div>
+              
+              <!-- Upload controls -->
+              <div class="flex-1">
+                <input 
+                  type="file" 
+                  #fileInput
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  class="hidden">
+                
+                <div class="flex gap-2">
+                  <button 
+                    type="button"
+                    (click)="fileInput.click()"
+                    class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors text-sm">
+                    <i class="fas fa-upload mr-1"></i>Subir
+                  </button>
+                  
+                  <button 
+                    type="button"
+                    *ngIf="logoPreview"
+                    (click)="removeLogo()"
+                    class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors text-sm">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                
+                <p class="text-xs text-gray-500 mt-2 dark:text-gray-400">
+                  Max 2MB
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Calificación</label>
+            <input 
+              type="number" 
+              [(ngModel)]="editingProvider.rating" 
+              name="rating"
+              min="0"
+              max="5"
+              step="0.1"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio/Hora ($)</label>
+            <input 
+              type="number" 
+              [(ngModel)]="editingProvider.hourly_rate" 
+              name="hourly_rate"
+              min="0"
+              step="0.01"
+              placeholder="Ej: 50.00"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+        </div>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-2 dark:text-gray-300">Descripción</label>
-        <textarea 
-          [(ngModel)]="editingProvider.description" 
-          name="description"
-          rows="3"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
-      </div>
-
+      <!-- Full Width Section for Services -->
+      <!-- Full Width Section for Services -->
       <div class="mb-4">
         <label class="block text-sm font-medium mb-3 dark:text-gray-300">Servicios *</label>
         <p *ngIf="loadingServices" class="text-sm text-gray-500 mb-2">Cargando servicios...</p>
-        <div *ngIf="!loadingServices" class="space-y-2 max-h-48 overflow-y-auto border border-gray-300 rounded-md p-3 dark:border-slate-600 dark:bg-slate-700">
+        <div *ngIf="!loadingServices" class="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto border border-gray-300 rounded-md p-3 dark:border-slate-600 dark:bg-slate-700">
           <div *ngFor="let service of services" class="flex items-center">
             <input 
               type="checkbox" 
@@ -161,8 +267,12 @@
               {{ service.name }}
             </label>
           </div>
-          <p *ngIf="services.length === 0" class="text-sm text-gray-500">No hay servicios disponibles</p>
+          <p *ngIf="services.length === 0" class="text-sm text-gray-500 col-span-2">No hay servicios disponibles</p>
         </div>
+        <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">Selecciona al menos un servicio</p>
+      </div>
+
+      <div class="flex justify-end space-x-3">
         <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">Selecciona al menos un servicio</p>
       </div>
 
@@ -196,6 +306,18 @@
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
       </div>
 
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio/Hora ($)</label>
+        <input 
+          type="number" 
+          [(ngModel)]="editingProvider.hourly_rate" 
+          name="hourly_rate"
+          min="0"
+          step="0.01"
+          placeholder="Ej: 50.00"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+      </div>
+
       <div class="flex justify-end space-x-3">
         <button 
           type="button" 
@@ -205,9 +327,196 @@
         </button>
         <button 
           type="submit"
-          [disabled]="!editForm.valid || saving || editingProvider.serviceIds.length === 0"
+          [disabled]="!editForm.valid || saving || uploadingLogo || editingProvider.serviceIds.length === 0"
           class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors disabled:opacity-50">
-          {{ saving ? 'Guardando...' : 'Guardar' }}
+          <span *ngIf="uploadingLogo">
+            <i class="fas fa-spinner fa-spin mr-2"></i>Subiendo imagen...
+          </span>
+          <span *ngIf="!uploadingLogo">
+            {{ saving ? 'Guardando...' : 'Guardar' }}
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Create Provider Modal -->
+<div *ngIf="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" (click)="closeCreateModal()">
+  <div class="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-5xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold dark:text-white">Crear Proveedor</h2>
+      <button (click)="closeCreateModal()" class="text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="createProvider()" #createForm="ngForm">
+      <!-- Two Column Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Left Column -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Nombre *</label>
+            <input 
+              type="text" 
+              [(ngModel)]="newProvider.name" 
+              name="name"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Descripción</label>
+            <textarea 
+              [(ngModel)]="newProvider.description" 
+              name="description"
+              rows="3"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Email</label>
+            <input 
+              type="email" 
+              [(ngModel)]="newProvider.email" 
+              name="email"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Teléfono</label>
+            <input 
+              type="text" 
+              [(ngModel)]="newProvider.phone" 
+              name="phone"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Logo del Proveedor</label>
+            <div class="flex items-center gap-4">
+              <!-- Preview -->
+              <div class="flex-shrink-0">
+                <img 
+                  [src]="logoPreview || 'assets/images/logo-icon-64.png'" 
+                  alt="Logo preview"
+                  class="w-20 h-20 rounded-lg object-cover border-2 border-gray-300 dark:border-slate-600">
+              </div>
+              
+              <!-- Upload controls -->
+              <div class="flex-1">
+                <input 
+                  type="file" 
+                  #fileInput2
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  class="hidden">
+                
+                <div class="flex gap-2">
+                  <button 
+                    type="button"
+                    (click)="fileInput2.click()"
+                    class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors text-sm">
+                    <i class="fas fa-upload mr-1"></i>Subir
+                  </button>
+                  
+                  <button 
+                    type="button"
+                    *ngIf="logoPreview"
+                    (click)="removeLogo()"
+                    class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors text-sm">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                
+                <p class="text-xs text-gray-500 mt-2 dark:text-gray-400">
+                  Max 2MB
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Calificación</label>
+            <input 
+              type="number" 
+              [(ngModel)]="newProvider.rating" 
+              name="rating"
+              min="0"
+              max="5"
+              step="0.1"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 dark:text-gray-300">Precio/Hora ($)</label>
+            <input 
+              type="number" 
+              [(ngModel)]="newProvider.hourly_rate" 
+              name="hourly_rate"
+              min="0"
+              step="0.01"
+              placeholder="Ej: 50.00"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Width Section for Services -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-3 dark:text-gray-300">Servicios *</label>
+        <p *ngIf="loadingServices" class="text-sm text-gray-500 mb-2">Cargando servicios...</p>
+        <div *ngIf="!loadingServices" class="max-h-48 overflow-y-auto border border-gray-300 rounded-md p-3 dark:border-slate-600 dark:bg-slate-700">
+          <div class="grid grid-cols-2 gap-3">
+            <div *ngFor="let service of services" class="flex items-center">
+              <input 
+                type="checkbox" 
+                [id]="'service-create-' + service.id"
+                [checked]="isServiceSelectedCreate(service.id)"
+                (change)="toggleServiceCreate(service.id)"
+                class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 dark:bg-slate-600 dark:border-slate-500">
+              <label 
+                [for]="'service-create-' + service.id" 
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">
+                {{ service.name }}
+              </label>
+            </div>
+          </div>
+          <p *ngIf="services.length === 0" class="col-span-2 text-sm text-gray-500 text-center py-2">No hay servicios disponibles</p>
+        </div>
+        <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">Selecciona al menos un servicio</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end space-x-3">
+        <button 
+          type="button" 
+          (click)="closeCreateModal()"
+          class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md transition-colors">
+          Cancelar
+        </button>
+        <button 
+          type="submit"
+          [disabled]="!createForm.valid || creating || uploadingLogo || newProvider.serviceIds.length === 0"
+          class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors disabled:opacity-50">
+          <span *ngIf="uploadingLogo">
+            <i class="fas fa-spinner fa-spin mr-2"></i>Subiendo imagen...
+          </span>
+          <span *ngIf="!uploadingLogo">
+            {{ creating ? 'Creando...' : 'Crear' }}
+          </span>
         </button>
       </div>
     </form>

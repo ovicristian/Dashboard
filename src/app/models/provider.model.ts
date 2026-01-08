@@ -3,6 +3,8 @@ export interface Provider {
   name: string;
   service: string;
   rating: number;
+  hourly_rate?: number;  // Precio por hora (opcional)
+  logo_url?: string;  // URL del logo del proveedor
 }
 
 // API Response interface

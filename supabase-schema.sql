@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS providers (
     address TEXT,
     city VARCHAR(100),
     rating DECIMAL(2,1) DEFAULT 4.5,
+    hourly_rate DECIMAL(10,2),
+    logo_url TEXT,
     contact_data JSONB,
     active BOOLEAN DEFAULT true,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
