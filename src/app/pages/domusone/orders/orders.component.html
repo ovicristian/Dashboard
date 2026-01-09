@@ -329,8 +329,8 @@
         </p>
         <p class="text-sm text-gray-600 dark:text-gray-400">
           Estado actual:
-          <span class="ml-2 px-2 py-1 rounded-full text-xs font-semibold" [ngClass]="getStatusBadgeClass(selectedOrder.status)">
-            {{ getStatusLabel(selectedOrder.status) }}
+          <span class="ml-2 px-2 py-1 rounded-full text-xs font-semibold" [ngClass]="getStatusBadgeClass(selectedOrder.order_status)">
+            {{ getStatusLabel(selectedOrder.order_status) }}
           </span>
         </p>
       </div>

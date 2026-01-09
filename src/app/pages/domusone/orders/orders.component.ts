@@ -123,7 +123,7 @@ export class OrdersComponent implements OnInit {
 
   openStatusModal(order: Order): void {
     this.selectedOrder = order;
-    this.newStatus = order.status;
+    this.newStatus = order.order_status;
     this.statusNotes = '';
     this.showStatusModal = true;
   }
