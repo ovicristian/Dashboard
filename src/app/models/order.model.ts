@@ -7,14 +7,17 @@ export interface Order {
   customer_email: string;
   customer_phone: string;
   customer_address: string;
+  customer_city?: string;
+  customer_notes?: string;
   
   // Totals
-  total_amount: number;
+  subtotal: number;
+  delivery_fee: number;
+  total: number;
   
   // Payment & Status
   payment_method: string;
-  status: OrderStatus;
-  notes?: string;
+  order_status: OrderStatus;
   
   // Items (populated from join)
   items?: OrderItem[];

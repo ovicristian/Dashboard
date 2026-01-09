@@ -89,14 +89,14 @@
                     <span class="text-sm text-gray-500 dark:text-gray-400">{{ order.customer_email }}</span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="font-semibold text-gray-900 dark:text-white">{{ formatCurrency(order.total_amount) }}</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ formatCurrency(order.total) }}</span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <span
                       class="px-2 py-1 rounded-full text-xs font-semibold"
-                      [ngClass]="getStatusBadgeClass(order.status)"
+                      [ngClass]="getStatusBadgeClass(order.order_status)"
                     >
-                      {{ getStatusLabel(order.status) }}
+                      {{ getStatusLabel(order.order_status) }}
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
@@ -116,7 +116,7 @@
                     </button>
                     <button
                       (click)="openStatusModal(order)"
-                      [disabled]="order.status === 'delivered' || order.status === 'cancelled'"
+                      [disabled]="order.order_status === 'delivered' || order.order_status === 'cancelled'"
                       class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-700 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-300 dark:hover:bg-yellow-800 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       title="Actualizar estado"
                     >
@@ -210,8 +210,8 @@
           <div class="bg-gray-50 dark:bg-slate-800 rounded-lg p-4 space-y-2">
             <p class="text-sm">
               <span class="font-medium text-gray-700 dark:text-gray-300">Estado:</span>
-              <span class="ml-2 px-2 py-1 rounded-full text-xs font-semibold" [ngClass]="getStatusBadgeClass(selectedOrder.status)">
-                {{ getStatusLabel(selectedOrder.status) }}
+              <span class="ml-2 px-2 py-1 rounded-full text-xs font-semibold" [ngClass]="getStatusBadgeClass(selectedOrder.order_status)">
+                {{ getStatusLabel(selectedOrder.order_status) }}
               </span>
             </p>
             <p class="text-sm">
@@ -222,9 +222,9 @@
               <span class="font-medium text-gray-700 dark:text-gray-300">Método de pago:</span>
               <span class="text-gray-600 dark:text-gray-400 ml-2">{{ selectedOrder.payment_method }}</span>
             </p>
-            <p class="text-sm" *ngIf="selectedOrder.notes">
+            <p class="text-sm" *ngIf="selectedOrder.customer_notes">
               <span class="font-medium text-gray-700 dark:text-gray-300">Notas:</span>
-              <span class="text-gray-600 dark:text-gray-400 ml-2">{{ selectedOrder.notes }}</span>
+              <span class="text-gray-600 dark:text-gray-400 ml-2">{{ selectedOrder.customer_notes }}</span>
             </p>
           </div>
         </div>
@@ -255,9 +255,21 @@
             </tbody>
             <tfoot class="bg-gray-50 dark:bg-slate-800">
               <tr>
+                <td colspan="3" class="px-4 py-3 text-right text-sm font-medium text-gray-700 dark:text-gray-300">Subtotal:</td>
+                <td class="px-4 py-3 text-right text-sm font-semibold text-gray-900 dark:text-white">
+                  {{ formatCurrency(selectedOrder.subtotal) }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" class="px-4 py-3 text-right text-sm font-medium text-gray-700 dark:text-gray-300">Envío:</td>
+                <td class="px-4 py-3 text-right text-sm font-semibold text-gray-900 dark:text-white">
+                  {{ formatCurrency(selectedOrder.delivery_fee) }}
+                </td>
+              </tr>
+              <tr>
                 <td colspan="3" class="px-4 py-3 text-right text-sm font-semibold text-gray-900 dark:text-white">Total:</td>
                 <td class="px-4 py-3 text-right text-lg font-bold text-gray-900 dark:text-white">
-                  {{ formatCurrency(selectedOrder.total_amount) }}
+                  {{ formatCurrency(selectedOrder.total) }}
                 </td>
               </tr>
             </tfoot>

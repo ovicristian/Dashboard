@@ -150,12 +150,14 @@ export class OrdersComponent implements OnInit {
           customer_phone: this.selectedOrder.customer_phone,
           customer_address: this.selectedOrder.customer_address,
           payment_method: this.selectedOrder.payment_method,
-          total_amount: this.selectedOrder.total_amount,
+          total: this.selectedOrder.total,
+          subtotal: this.selectedOrder.subtotal,
+          delivery_fee: this.selectedOrder.delivery_fee,
           items: this.selectedOrder.items,
           created_at: this.selectedOrder.created_at,
-          notes: this.selectedOrder.notes,
-          status: this.newStatus
-        },
+          customer_notes: this.selectedOrder.customer_notes,
+          order_status: this.newStatus
+        } as any,
         this.newStatus,
         this.statusNotes
       ).subscribe({
